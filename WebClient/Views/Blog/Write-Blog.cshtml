@@ -1,0 +1,156 @@
+﻿@{
+    ViewData["Title"] = "Write a Blog";
+}
+<!-- CSS Styling -->
+<style>
+    /* Container styling */
+    /* Toggle Container Styling */
+    .toggle {
+        position: relative;
+        display: inline-block;
+        width: 60px; /* Chiều rộng của toggle */
+        height: 34px; /* Chiều cao của toggle */
+    }
+
+        /* Hide the default checkbox */
+        .toggle input {
+            opacity: 0; /* Ẩn checkbox */
+            width: 0;
+            height: 0;
+        }
+
+    /* Slider Styling */
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc; /* Màu nền khi chưa chọn */
+        transition: .4s; /* Hiệu ứng chuyển tiếp */
+        border-radius: 34px; /* Đường viền tròn */
+    }
+
+        /* Circle inside the toggle */
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px; /* Chiều cao của vòng tròn */
+            width: 26px; /* Chiều rộng của vòng tròn */
+            left: 4px; /* Khoảng cách bên trái */
+            bottom: 4px; /* Khoảng cách bên dưới */
+            background-color: white; /* Màu nền của vòng tròn */
+            border-radius: 50%; /* Đường viền tròn */
+            transition: .4s; /* Hiệu ứng chuyển tiếp */
+        }
+
+    /* Checkbox checked styling */
+    input:checked + .slider {
+        background-color: #28a745; /* Màu nền khi chọn */
+    }
+
+        input:checked + .slider:before {
+            transform: translateX(26px); /* Di chuyển vòng tròn sang phải khi chọn */
+        }
+
+    .blog-form-container {
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+        /* Header styling */
+        .blog-form-container h2 {
+            text-align: center;
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+    /* Form Group Styling */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        /* Label Styling */
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+    /* Input and Textarea Styling */
+    .form-control, .form-control-file {
+        width: 100%;
+        padding: 10px;
+        font-size: 1em;
+        color: #333;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    /* Textarea Specific Styling */
+    .form-control {
+        resize: vertical;
+    }
+
+    /* Button Styling */
+    .btn-submit {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        font-size: 1.1em;
+        color: #fff;
+        background-color: #28a745;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        /* Button Hover Effect */
+        .btn-submit:hover {
+            background-color: #218838;
+        }
+</style>
+
+<div class="blog-form-container">
+    <h2>Write a New Blog Post</h2>
+    <form asp-action="CreateBlog" asp-controller="Blog" method="post" enctype="multipart/form-data">
+        <!-- Title -->
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="Title" class="form-control" placeholder="Enter blog title" required />
+        </div>
+
+        <!-- Thumbnail Image -->
+        <div class="form-group">
+            <label for="thumbnail">Thumbnail Image</label>
+            <input type="file" id="thumbnail" name="image" class="form-control-file" accept="image/*" />
+        </div>
+
+        <!-- Content -->
+        <div class="form-group">
+            <label for="content">Content</label>
+            <textarea id="content" name="Content" class="form-control" rows="10" placeholder="Write your blog content here..." required></textarea>
+        </div>
+        <!-- Allow Comments -->
+        <div class="form-group">
+            <label>Do you allow others to comment?</label>
+            <div class="toggle">
+                <input type="checkbox" id="allowComments" name="allowComments" value="true" />
+                <label for="allowComments" class="slider"></label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-submit">Publish Blog</button>
+    </form>
+</div>
+
+

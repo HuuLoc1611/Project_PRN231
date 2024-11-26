@@ -1,0 +1,286 @@
+USE [master]
+GO
+/****** Object:  Database [ProjectPRN231]    Script Date: 11/26/2024 10:10:04 PM ******/
+CREATE DATABASE [ProjectPRN231]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'ProjectPRN231', FILENAME = N'D:\SQL\MSSQL16.MSSQLSERVER\MSSQL\DATA\ProjectPRN231.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'ProjectPRN231_log', FILENAME = N'D:\SQL\MSSQL16.MSSQLSERVER\MSSQL\DATA\ProjectPRN231_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
+GO
+ALTER DATABASE [ProjectPRN231] SET COMPATIBILITY_LEVEL = 160
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [ProjectPRN231].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [ProjectPRN231] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [ProjectPRN231] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [ProjectPRN231] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [ProjectPRN231] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [ProjectPRN231] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [ProjectPRN231] SET AUTO_CLOSE ON 
+GO
+ALTER DATABASE [ProjectPRN231] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [ProjectPRN231] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [ProjectPRN231] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [ProjectPRN231] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [ProjectPRN231] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [ProjectPRN231] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [ProjectPRN231] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [ProjectPRN231] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [ProjectPRN231] SET  ENABLE_BROKER 
+GO
+ALTER DATABASE [ProjectPRN231] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [ProjectPRN231] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [ProjectPRN231] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [ProjectPRN231] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [ProjectPRN231] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [ProjectPRN231] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [ProjectPRN231] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [ProjectPRN231] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [ProjectPRN231] SET  MULTI_USER 
+GO
+ALTER DATABASE [ProjectPRN231] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [ProjectPRN231] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [ProjectPRN231] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [ProjectPRN231] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [ProjectPRN231] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [ProjectPRN231] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+ALTER DATABASE [ProjectPRN231] SET QUERY_STORE = ON
+GO
+ALTER DATABASE [ProjectPRN231] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+GO
+USE [ProjectPRN231]
+GO
+/****** Object:  Table [dbo].[Account]    Script Date: 11/26/2024 10:10:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Account](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Username] [nvarchar](max) NULL,
+	[Password] [nvarchar](max) NULL,
+	[Role] [int] NULL,
+	[Email] [nvarchar](max) NULL,
+	[Full_Name] [nvarchar](max) NULL,
+	[Phone] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Account] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Blog]    Script Date: 11/26/2024 10:10:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Blog](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [nvarchar](max) NULL,
+	[Image] [nvarchar](max) NULL,
+	[Created_Date] [date] NULL,
+	[Creator_Id] [int] NULL,
+	[Status] [bit] NULL,
+	[isComment] [bit] NULL,
+	[Content] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Blog] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[CommentBlog]    Script Date: 11/26/2024 10:10:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CommentBlog](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Blog_id] [int] NULL,
+	[Parent_id] [int] NULL,
+	[Account_id] [int] NULL,
+	[Created_Date] [date] NULL,
+	[Content] [nvarchar](max) NULL,
+ CONSTRAINT [PK_CommentBlog] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Tag]    Script Date: 11/26/2024 10:10:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Tag](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Tag] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TagBlog]    Script Date: 11/26/2024 10:10:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TagBlog](
+	[Tag_Id] [int] NULL,
+	[Blog_Id] [int] NULL,
+	[id] [int] IDENTITY(1,1) NOT NULL,
+ CONSTRAINT [PK_TagBlog] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Account] ON 
+GO
+INSERT [dbo].[Account] ([Id], [Username], [Password], [Role], [Email], [Full_Name], [Phone]) VALUES (1, N'john_doe', N'password123', 1, N'john.doe@example.com', N'John Doe', N'123-456-7890')
+GO
+INSERT [dbo].[Account] ([Id], [Username], [Password], [Role], [Email], [Full_Name], [Phone]) VALUES (2, N'jane_smith', N'password456', 2, N'jane.smith@example.com', N'Jane Smith', N'987-654-3210')
+GO
+SET IDENTITY_INSERT [dbo].[Account] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Blog] ON 
+GO
+INSERT [dbo].[Blog] ([Id], [Title], [Image], [Created_Date], [Creator_Id], [Status], [isComment], [Content]) VALUES (1, N'Góc thắc mắc', N'/uploads/e2d757d1-0cad-4e89-9993-5f53598c21d5.png', CAST(N'2024-10-19' AS Date), 1, 1, 1, N'Có ai có lịch học giống tôi không ?')
+GO
+INSERT [dbo].[Blog] ([Id], [Title], [Image], [Created_Date], [Creator_Id], [Status], [isComment], [Content]) VALUES (2, N'Second Blog Post', N'/uploads/97a7d90a-9dbe-4c89-8a1e-99344f7f2a9d.png', CAST(N'2024-10-20' AS Date), 2, 1, 1, N'This is the content of the second blog post.')
+GO
+INSERT [dbo].[Blog] ([Id], [Title], [Image], [Created_Date], [Creator_Id], [Status], [isComment], [Content]) VALUES (4, N'Blog thu 2', N'/uploads/ca37a9b9-e240-4e60-afba-95e6a706ffb8.png', CAST(N'2024-10-31' AS Date), 1, NULL, 0, N'Blog thu 2')
+GO
+INSERT [dbo].[Blog] ([Id], [Title], [Image], [Created_Date], [Creator_Id], [Status], [isComment], [Content]) VALUES (5, N'bLOG THU 3', N'/uploads/595c330d-4d4b-401b-bd85-a2413d277f5f.png', CAST(N'2024-10-31' AS Date), 1, NULL, 0, N'blog thu 3')
+GO
+INSERT [dbo].[Blog] ([Id], [Title], [Image], [Created_Date], [Creator_Id], [Status], [isComment], [Content]) VALUES (13, N'234', NULL, NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[Blog] ([Id], [Title], [Image], [Created_Date], [Creator_Id], [Status], [isComment], [Content]) VALUES (15, N'Góc thắc mắc', NULL, CAST(N'2024-11-01' AS Date), 1, 1, 1, N'Làm sao để code java trong c# ?')
+GO
+INSERT [dbo].[Blog] ([Id], [Title], [Image], [Created_Date], [Creator_Id], [Status], [isComment], [Content]) VALUES (16, N'Blog sai', NULL, CAST(N'2024-11-01' AS Date), 1, NULL, 1, N'Blog sai')
+GO
+INSERT [dbo].[Blog] ([Id], [Title], [Image], [Created_Date], [Creator_Id], [Status], [isComment], [Content]) VALUES (17, N'Học phí ?', NULL, CAST(N'2024-11-01' AS Date), 1, 1, 1, N'Học phí trường mình 1 kì là bao nhiêu ?')
+GO
+INSERT [dbo].[Blog] ([Id], [Title], [Image], [Created_Date], [Creator_Id], [Status], [isComment], [Content]) VALUES (18, N'Blog 5', N'/uploads/94c13b4e-1c4f-40f5-8ffe-bf1fa27d726a.png', CAST(N'2024-11-01' AS Date), 1, NULL, 1, N'Facebook có đăng nhập được không ?')
+GO
+INSERT [dbo].[Blog] ([Id], [Title], [Image], [Created_Date], [Creator_Id], [Status], [isComment], [Content]) VALUES (19, N'Blog thứ 10', NULL, CAST(N'2024-11-01' AS Date), 1, 1, 1, N'Blog thứ 10')
+GO
+SET IDENTITY_INSERT [dbo].[Blog] OFF
+GO
+SET IDENTITY_INSERT [dbo].[CommentBlog] ON 
+GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (28, 1, 0, 1, CAST(N'2024-10-31' AS Date), N'Có ai không ạ ...')
+GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (34, 1, 0, 1, CAST(N'2024-11-01' AS Date), N'Có tôi này')
+GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (35, 1, 34, 1, CAST(N'2024-11-01' AS Date), N'Lớp se1735')
+GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (37, 15, 0, 2, CAST(N'2024-11-01' AS Date), N'sao tôi biết được ?')
+GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (38, 1, 0, 2, CAST(N'2024-11-01' AS Date), N'tôi lớp se1729')
+GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (39, 1, 0, 1, CAST(N'2024-11-01' AS Date), N'lop se1730
+')
+GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (40, 1, 34, 1, CAST(N'2024-11-01' AS Date), N'hi')
+GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (41, 19, 0, 1, CAST(N'2024-11-01' AS Date), N'abc')
+GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (43, 19, 0, 1, CAST(N'2024-11-01' AS Date), N'xyz')
+GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (44, 19, 43, 2, CAST(N'2024-11-01' AS Date), N'bcd')
+GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (45, 19, 43, 2, CAST(N'2024-11-01' AS Date), N'Blog rat hay va hieu qua')
+GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (46, 19, 43, 2, CAST(N'2024-11-01' AS Date), N'toi yeu hung yen
+')
+GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (47, 15, 0, 2, CAST(N'2024-11-01' AS Date), N'dãy dùng thử chat gpt')
+GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (48, 15, 0, 1, CAST(N'2024-11-01' AS Date), N'dad')
+GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (49, 15, 48, 1, CAST(N'2024-11-01' AS Date), N'cmt mat day
+')
+GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (50, 19, 0, 1, CAST(N'2024-11-26' AS Date), N'abvc')
+GO
+SET IDENTITY_INSERT [dbo].[CommentBlog] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Tag] ON 
+GO
+INSERT [dbo].[Tag] ([Id], [Name]) VALUES (1, N'Technology')
+GO
+INSERT [dbo].[Tag] ([Id], [Name]) VALUES (2, N'Education')
+GO
+SET IDENTITY_INSERT [dbo].[Tag] OFF
+GO
+SET IDENTITY_INSERT [dbo].[TagBlog] ON 
+GO
+INSERT [dbo].[TagBlog] ([Tag_Id], [Blog_Id], [id]) VALUES (1, 1, 1)
+GO
+INSERT [dbo].[TagBlog] ([Tag_Id], [Blog_Id], [id]) VALUES (2, 2, 2)
+GO
+SET IDENTITY_INSERT [dbo].[TagBlog] OFF
+GO
+ALTER TABLE [dbo].[Blog]  WITH CHECK ADD  CONSTRAINT [FK_Blog_Account] FOREIGN KEY([Creator_Id])
+REFERENCES [dbo].[Account] ([Id])
+GO
+ALTER TABLE [dbo].[Blog] CHECK CONSTRAINT [FK_Blog_Account]
+GO
+ALTER TABLE [dbo].[CommentBlog]  WITH CHECK ADD  CONSTRAINT [FK_CommentBlog_Account] FOREIGN KEY([Account_id])
+REFERENCES [dbo].[Account] ([Id])
+GO
+ALTER TABLE [dbo].[CommentBlog] CHECK CONSTRAINT [FK_CommentBlog_Account]
+GO
+ALTER TABLE [dbo].[CommentBlog]  WITH CHECK ADD  CONSTRAINT [FK_CommentBlog_Blog] FOREIGN KEY([Blog_id])
+REFERENCES [dbo].[Blog] ([Id])
+GO
+ALTER TABLE [dbo].[CommentBlog] CHECK CONSTRAINT [FK_CommentBlog_Blog]
+GO
+ALTER TABLE [dbo].[TagBlog]  WITH CHECK ADD  CONSTRAINT [FK_TagBlog_Blog] FOREIGN KEY([Blog_Id])
+REFERENCES [dbo].[Blog] ([Id])
+GO
+ALTER TABLE [dbo].[TagBlog] CHECK CONSTRAINT [FK_TagBlog_Blog]
+GO
+ALTER TABLE [dbo].[TagBlog]  WITH CHECK ADD  CONSTRAINT [FK_TagBlog_Tag] FOREIGN KEY([Tag_Id])
+REFERENCES [dbo].[Tag] ([Id])
+GO
+ALTER TABLE [dbo].[TagBlog] CHECK CONSTRAINT [FK_TagBlog_Tag]
+GO
+USE [master]
+GO
+ALTER DATABASE [ProjectPRN231] SET  READ_WRITE 
+GO

@@ -1,0 +1,336 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- META ============================================= -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <meta name="robots" content="" />
+
+    <!-- DESCRIPTION -->
+    <meta name="description" content="EduChamp : Education HTML Template" />
+
+    <!-- OG -->
+    <meta property="og:title" content="EduChamp : Education HTML Template" />
+    <meta property="og:description" content="EduChamp : Education HTML Template" />
+    <meta property="og:image" content="" />
+    <meta name="format-detection" content="telephone=no">
+
+    <!-- FAVICONS ICON ============================================= -->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png" />
+
+    <!-- PAGE TITLE HERE ============================================= -->
+    <title>EduChamp : Education HTML Template </title>
+
+    <!-- MOBILE SPECIFIC ============================================= -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.min.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+    <!-- All PLUGINS CSS ============================================= -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/assets.css">
+
+    <!-- TYPOGRAPHY ============================================= -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/typography.css">
+
+    <!-- SHORTCODES ============================================= -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/shortcodes/shortcodes.css">
+
+    <!-- STYLESHEETS ============================================= -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/test.css>
+    <link class="skin" rel="stylesheet" type="text/css" href="assets/css/color/color-1.css">
+    <style>
+        /* Style for horizontal blog item */
+        
+        .media-post{
+            list-style-type: none; /* Xóa dấu chấm */
+            padding: 0; /* Xóa khoảng cách mặc định bên trong */
+            margin: 0; /* Xóa khoảng cách mặc định bên ngoài */
+        }
+    </style>
+</head>
+<body id="bg">
+
+    <div class="page-wraper">
+        <div id="loading-icon-bx"></div>
+
+        <!-- Header Top ==== -->
+
+        <!-- header END ==== -->
+        <!-- Content -->
+        <div class="page-content bg-white">
+            <!-- inner page banner -->
+            <div class="page-banner ovbl-dark" style="background-image:url(assets/images/banner/banner1.jpg);">
+                <div class="container">
+                    <div class="page-banner-entry">
+                        <h1 class="text-white">Blog Standard Sidebar</h1>
+                    </div>
+                </div>
+
+            </div>
+            <div class="container mt-3">
+                <a href="/Blog/WriteBlog" class="btn btn-primary">Write Blog</a>
+            </div>
+            <!-- Breadcrumb row -->
+            <div class="breadcrumb-row">
+                <div class="container">
+                    <ul class="list-inline">
+                        <li><a href="#">Home</a></li>
+                        <li>Blog Standard Sidebar</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Breadcrumb row END -->
+            <div class="content-block">
+                <div class="section-area section-sp1">
+                    <div class="container">
+                        <div class="row">
+                            <!-- Left part start -->
+                            <div class="col-md-7 col-lg-8 col-xl-8 ">
+                              
+                                @foreach (Blog blog in ViewBag.ListBlog)
+                                {
+                                   
+                                        <div class="post action-card col-xl-6 col-lg-6 col-md-12 col-xs-12 m-b40">
+                                        <div class="list-blog">
+                                            <div class="recent-news blog-lg m-b40">
+                                                <div class="action-box">
+                                                    <img src="@blog.Image" alt="">
+                                                </div>
+                                                <div class="info-bx">
+                                                    <ul class="media-post">
+                                                        <li><a href="#"><i class="fa fa-calendar"></i>@blog.CreatedDate</a></li>
+                                                        <li><a href="#"><i class="fa fa-user"></i>@blog.Creator.FullName</a></li>
+
+                                                    </ul>
+                                                    <h5 class="post-title"><a href="/Blog/BlogDetail/@blog.Id">@blog.Title</a></h5>
+
+                                                    <p>@blog.Content</p>
+                                                    <div class="post-extra">
+                                                        <a href="/Blog/BlogDetail/@blog.Id" class="btn-link">READ MORE</a>
+                                                        <a href="#" class="comments-bx"><i class="fa fa-comments-o"></i>20 Comment</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+
+                                            
+                                       
+                                    </div>
+                                }
+                               
+
+                               
+
+                                <!-- Pagination start -->
+                                <div class="pagination-bx rounded-sm gray clearfix">
+                                    <ul class="pagination">
+                                        <li class="previous"><a href="#"><i class="ti-arrow-left"></i> Prev</a></li>
+                                        <li class="active"><a href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li class="next"><a href="#">Next <i class="ti-arrow-right"></i></a></li>
+                                    </ul>
+                                </div>
+                                <!-- Pagination END -->
+                            </div>
+                            <!-- Left part END -->
+                            <!-- Side bar start -->
+                            <div class="col-md-5 col-lg-4 col-xl-4 sticky-top">
+                                <aside class="side-bar sticky-top">
+                                    <div class="widget">
+                                        <br />
+                                        <h6 class="widget-title">Search by blog name</h6>
+                                        <div class="search-bx style-1">
+                                            <form role="search" method="post">
+                                                <div class="input-group">
+                                                    <input id="searchName" name="text" class="form-control filterBlog" placeholder="Search blog by name..." type="text">
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <br />
+                       
+                                        <h6 class="widget-title">Date from</h6>
+                                        <div class="search-bx style-1">
+                                            <form role="search" method="post">
+                                                <div class="input-group">
+                                                    <input id="dateFrom" name="text" class="form-control filterBlog" type="date">
+                                                </div>
+                                            </form>
+                                            <br />
+                                        </div>
+                                        <h6 class="widget-title">Date to</h6>
+                                        <div class="search-bx style-1">
+                                            <form role="search" method="post">
+                                                <div class="input-group">
+                                                    <input id="dateTo" name="text" class="form-control filterBlog" type="date">
+                                                </div>
+                                            </form>
+                                        </div>
+
+
+                                    </div>
+                        </aside>
+                    </div>
+                        </div>
+                    <!-- Side bar END -->
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- Content END-->
+    <!-- Footer ==== -->
+    <!-- Footer END ==== -->
+    <!-- scroll top button -->
+    <button class="back-to-top fa fa-chevron-up"></button>
+    </div>
+    <!-- External JavaScripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/vendors/bootstrap/js/popper.min.js"></script>
+    <script src="assets/vendors/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="assets/vendors/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
+    <script src="assets/vendors/magnific-popup/magnific-popup.js"></script>
+    <script src="assets/vendors/counter/waypoints-min.js"></script>
+    <script src="assets/vendors/counter/counterup.min.js"></script>
+    <script src="assets/vendors/imagesloaded/imagesloaded.js"></script>
+    <script src="assets/vendors/masonry/masonry.js"></script>
+    <script src="assets/vendors/masonry/filter.js"></script>
+    <script src="assets/vendors/owl-carousel/owl.carousel.js"></script>
+    <script src="assets/js/functions.js"></script>
+    <script src="assets/js/contact.js"></script>
+    <script src='assets/vendors/switcher/switcher.js'></script>
+    <script>
+
+        function like(n){
+            var number = $('#total-like-' + n).text().trim();
+            console.log(number);
+            var like = parseInt(number);
+            $('#total-like-' + n).html(like + 1);
+
+            $('like-button-' + n).hide();
+        }
+
+        /*$(document).ready(function () {
+            var blogHtml = '';
+            $.ajax({
+                type: "get",
+                url: `https://localhost:5100/GetListBlog`,
+                success: function (response) {
+                    console.log(response.blogs);
+
+                    // Clear existing blog list
+                    $('.list-blog').empty();
+
+                    // Populate the blog list with new data
+                    $.each(response.blogs, function (index, blog) {
+                        blogHtml += `
+                                    <div class="recent-news blog-lg m-b40">
+                                            <div class="action-box blog-lg">
+
+                                                    <img src="${blog.image}" alt="">
+                                            </div>
+                                        <div class="info-bx">
+                                            <ul class="media-post">
+                                                <li><a href="#"><i class="fa fa-calendar"></i>${new Date(blog.createdDate).toLocaleDateString()}</a></li>
+
+        <li><a href="#"><i class="fa fa-user"></i>${blog.creator.fullName}</a></li>
+
+                                            </ul>
+                                            <h5 class="post-title">
+                                                    <a href="/Blog/BlogDetail/${blog.id}">${blog.title}</a>
+                                            </h5>
+                                                    <p>${blog.content}</p>
+                                            <div class="post-extra">
+                                                <a href="#" class="btn-link">READ MORE</a>
+                                                <a href="#" class="comments-bx"><i class="fa fa-comments-o"></i>${response.commentCount} Comment</a>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                        $('.list-blog').html(blogHtml);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(error); // Handle errors
+                }
+            });
+        });*/
+
+        $('.filterBlog').on('click input', function () {
+            var searchName = $('#searchName').val().trim();
+            var searchTag = $('#searchTag').val().trim();
+            var dateFrom = $('#dateFrom').val().trim();
+            var dateTo = $('#dateTo').val().trim();
+
+            console.log("Search name: " + searchName);
+            console.log("searchTag: " + searchTag);
+            console.log("dateFrom: " + dateFrom);
+            console.log("dateTo: " + dateTo);
+
+            var blogHtml = '';
+
+            $.ajax({
+                type: "get",
+                url: `https://localhost:5100/GetListBlog?searchName=${searchName}&dateFrom=${dateFrom}&dateTo=${dateTo}`,
+                dataType: "json",
+                data: {
+                    searchName: searchName,
+                    searchTag: searchTag,
+                    dateFrom: dateFrom,
+                    dateTo: dateTo
+                },
+                success: function (response) {
+                    console.log(response.blogs);
+
+                    // Clear existing blog list
+                    $('.list-blog').empty();
+
+                    // Populate the blog list with new data
+                    $.each(response.blogs, function (index, blog) {
+                        var imageUrl = blog.image ? blog.image : "";
+                        blogHtml += `
+                                    <div class="recent-news blog-lg m-b40">
+                                            <div class="action-box blog-lg">
+
+                                                            <img src="${imageUrl}" alt="">
+                                            </div>
+                                        <div class="info-bx">
+                                            <ul class="media-post">
+                                                <li><a href="#"><i class="fa fa-calendar"></i>${new Date(blog.createdDate).toLocaleDateString()}</a></li>
+                                                        <li><a href="#"><i class="fa fa-user"></i>${blog.creator.fullName}</a></li>
+
+                                            </ul>
+                                                    <h5 class="post-title">
+                                                            <a href="/Blog/BlogDetail/${blog.id}">${blog.title}</a>
+                                                    </h5>
+                                                    <p>${blog.content}</p>
+                                            <div class="post-extra">
+                                                <a href="#" class="btn-link">READ MORE</a>
+                                                <a href="#" class="comments-bx"><i class="fa fa-comments-o"></i>${response.commentCount} Comment</a>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                        $('.list-blog').html(blogHtml);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(error); // Handle errors
+                }
+            });
+        });
+
+
+    </script>
+</body>
+
+</html>

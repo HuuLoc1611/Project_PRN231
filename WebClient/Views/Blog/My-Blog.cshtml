@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .blog-post {
+            background: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+            .blog-post img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 5px;
+            }
+
+            .blog-post h2 {
+                margin: 0 0 10px;
+            }
+
+            .blog-post p {
+                margin: 10px 0;
+            }
+
+        .button-container {
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .update-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .delete-button {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Blog</h1>
+    @foreach (Blog blog in ViewBag.blogs)
+    {
+        <div class="blog-post">
+            <h2 class="post-title">
+                <a href="/Blog/BlogDetail/@blog.Id">@blog.Title</a>
+            </h2>
+            <img src="@blog.Image" alt="Image for Blog Post 1">
+            <p><strong>Created on:</strong> @blog.CreatedDate?.ToString("dd/MM/yyyy")</p>
+            <p>@blog.Content</p>
+            <div class="button-container">
+                <a href="/Blog/ViewBlog/@blog.Id">
+                    <button class="update-button">Update</button>
+                </a>
+                <a onclick="return confirmSubmit()" href="/Blog/DeleteBlog/@blog.Id">
+                    <button onsubmit="return confirmSubmit()" class="delete-button">Delete</button>
+                </a>
+                
+            </div>
+        </div>
+    }
+    
+
+    <!-- Add more blog posts similarly -->
+
+</body>
+<script>
+    function confirmSubmit() {
+        var confirmed = confirm("Are you sure to delete comment?");
+
+        if (!confirmed) {
+            return false; // Prevent form submission
+        }
+
+        // Form is confirmed, continue with submission
+        return true;
+    }
+</script>
+</html>

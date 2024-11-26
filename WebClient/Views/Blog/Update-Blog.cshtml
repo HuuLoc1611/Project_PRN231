@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+        }
+
+            .toggle-container input[type="checkbox"] {
+                margin-left: 10px;
+            }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Update Blog</h1>
+    <div class="form-container">
+        <form asp-action="UpdateBlog" asp-controller="Blog" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="blogId">ID:</label>
+                <input type="text" id="blogId" name="blogId" value="@ViewBag.blog.Id" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" value="@ViewBag.blog.Title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="createDate">Created On:</label>
+                <input type="text" id="createDate" name="createDate" value="@ViewBag.blog.CreatedDate?.ToString("dd/MM/yyyy")" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="author">Author:</label>
+                <input type="text" id="author" name="author" value="@ViewBag.blog.Creator?.FullName" readonly>
+            </div>
+
+            <div class="form-group toggle-container">
+                <label for="isComment">Allow Comments:</label>
+                <input type="checkbox" id="isComment" name="isComment" value="true" @(ViewBag.blog.IsComment == true ? "checked" : "") />
+                <input type="hidden" name="isComment" value="false" />
+            </div>
+
+            <div class="form-group">
+                <label for="image">Current Image:</label>
+                <img src="@ViewBag.blog.Image" alt="Current Blog Image" class="image-preview" />
+            </div>
+
+            <div class="form-group">
+                <label for="newImage">Upload New Image:</label>
+                <input type="file" id="newImage" name="newImage" accept="image/*">
+            </div>
+
+            <div class="form-group">
+                <label for="content">Content:</label>
+                <textarea id="content" name="content" rows="5" required>@ViewBag.blog.Content</textarea>
+            </div>
+
+            <button type="submit">Update Blog</button>
+        </form>
+    </div>
+</body>
+</html>

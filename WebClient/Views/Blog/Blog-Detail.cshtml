@@ -1,0 +1,464 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<!-- META ============================================= -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+	<meta name="robots" content="" />
+	
+	<!-- DESCRIPTION -->
+	<meta name="description" content="EduChamp : Education HTML Template" />
+	
+	<!-- OG -->
+	<meta property="og:title" content="EduChamp : Education HTML Template" />
+	<meta property="og:description" content="EduChamp : Education HTML Template" />
+	<meta property="og:image" content="" />
+	<meta name="format-detection" content="telephone=no">
+	
+	<!-- FAVICONS ICON ============================================= -->
+	<link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png" />
+	
+	<!-- PAGE TITLE HERE ============================================= -->
+	<title>EduChamp : Education HTML Template </title>
+	
+	<!-- MOBILE SPECIFIC ============================================= -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!--[if lt IE 9]>
+	<script src="assets/js/html5shiv.min.js"></script>
+	<script src="assets/js/respond.min.js"></script>
+	<![endif]-->
+	
+	<!-- All PLUGINS CSS ============================================= -->
+	<link rel="stylesheet" type="text/css" href="/assets/css/assets.css">
+	
+	<!-- TYPOGRAPHY ============================================= -->
+	<link rel="stylesheet" type="text/css" href="/assets/css/typography.css">
+	
+	<!-- SHORTCODES ============================================= -->
+	<link rel="stylesheet" type="text/css" href="/assets/css/shortcodes/shortcodes.css">
+	
+	<!-- STYLESHEETS ============================================= -->
+	<link rel="stylesheet" type="text/css" href="/assets/css/test.css>
+	<link class="skin" rel="stylesheet" type="text/css" href="assets/css/color/color-1.css">
+	<style>
+		.comment-form-comment {
+			position: relative;
+			margin-bottom: 15px;
+		}
+
+			.comment-form-comment label {
+				display: block;
+				font-weight: bold;
+				margin-bottom: 5px;
+			}
+
+			.comment-form-comment textarea {
+				width: 100%;
+				padding: 10px;
+				font-size: 16px;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				resize: vertical; /* Để điều chỉnh chiều cao của textarea */
+				box-sizing: border-box; /* Đảm bảo padding không làm thay đổi chiều rộng */
+			}
+
+				.comment-form-comment textarea::placeholder {
+					color: #999;
+				}
+
+		.comment-list {
+			list-style-type: none; /* Loại bỏ ký hiệu đầu dòng */
+			padding: 0; /* Xóa khoảng cách bên trái */
+		}
+		.blog-entry {
+			position: relative;
+			padding: 10px;
+		}
+
+		.blog-header {
+			position: absolute;
+			top: 0;
+			right: 0;
+		}
+
+		.overlay {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+			z-index: 9999;
+		}
+
+		.edit-form {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background-color: white;
+			padding: 20px;
+		}
+
+		.edit-button {
+			position: relative;
+			z-index: 1;
+		}
+
+		.edit-button, .remove-button, .reply-button, .update-button, .submit-reply {
+			background-color: #e1ecf4;
+			border-radius: 3px;
+			border: 1px solid #7aa7c7;
+			box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+			box-sizing: border-box;
+			color: #39739d;
+			cursor: pointer;
+			display: inline-block;
+			font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+			font-size: 12px;
+			font-weight: 400;
+			line-height: 1.15385;
+			margin: 0;
+			outline: none;
+			padding: 6px .6em;
+			position: relative;
+			text-align: center;
+			text-decoration: none;
+			user-select: none;
+			-webkit-user-select: none;
+			touch-action: manipulation;
+			vertical-align: baseline;
+			white-space: nowrap;
+		}
+
+		.edit-button-small, .remove-button-small {
+			background-color: #e1ecf4;
+			border-radius: 3px;
+			border: 1px solid #7aa7c7;
+			box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+			box-sizing: border-box;
+			color: #39739d;
+			cursor: pointer;
+			display: inline-block;
+			font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+			font-size: 11px;
+			font-weight: 400;
+			line-height: 1.15385;
+			margin: 0;
+			outline: none;
+			padding: 5px .5em;
+			position: relative;
+			text-align: center;
+			text-decoration: none;
+			user-select: none;
+			-webkit-user-select: none;
+			touch-action: manipulation;
+			vertical-align: baseline;
+			white-space: nowrap;
+		}
+
+
+		.reply-detail {
+			position: relative;
+		}
+
+		.edit-button-small {
+			position: absolute;
+			top: 10px;
+			right: 53px;
+			cursor: pointer;
+		}
+
+		.remove-button-small {
+			position: absolute;
+			top: 10px;
+			right: 0px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body id="bg">
+<div class="page-wraper">
+<div id="loading-icon-bx"></div>
+
+	<!-- Header Top ==== -->
+
+    <!-- header END ==== -->
+    <!-- Content -->
+    <div class="page-content bg-white">
+        <!-- inner page banner -->
+        <div class="page-banner ovbl-dark" style="background-image:url(assets/images/banner/banner2.jpg);">
+            <div class="container">
+                <div class="page-banner-entry">
+                    <h1 class="text-white">Blog Details</h1>
+				</div>
+            </div>
+        </div>
+		<!-- Breadcrumb row -->
+		<div class="breadcrumb-row">
+			<div class="container">
+				<ul class="list-inline">
+					<li><a href="#">Home</a></li>
+					<li>Blog Details</li>
+				</ul>
+			</div>
+		</div>
+		<!-- Breadcrumb row END -->
+        <div class="content-block">
+			<div class="section-area section-sp1">
+				<div class="container">
+					<div class="row">
+						<!-- Left part start -->
+							<div class="col-lg-8 col-xl-8">
+								<!-- blog start -->
+								<div class="recent-news blog-lg">
+									<div class="action-box blog-lg">
+										<img src="@ViewBag.blog.Image" alt="">
+									</div>
+									<div class="info-bx">
+										<ul class="media-post" style="list-style-type: none">
+											<li><a href="#"><i class="fa fa-calendar"></i>@(ViewBag.blog.CreatedDate?.ToString("dd/MM/yyyy") ?? "N/A")</a></li>
+										</ul>
+										<p>@ViewBag.blog.Content</p>
+										<div class="ttr-divider bg-gray"><i class="icon-dot c-square"></i></div>
+
+									</div>
+								</div>
+								<div class="clear" id="comment-list">
+									<div class="comments-area" id="comments">
+										<h2 class="comments-title">@ViewBag.totalComment Comments</h2>
+										<div class="clearfix m-b20">
+											<!-- comment list END -->
+											<ol class="comment-list">
+												@if (ViewBag.commentList != null)
+												{
+													@foreach (CommentBlog commentBlog in ViewBag.commentList)
+													{
+														@if (commentBlog.ParentId == 0 || commentBlog.ParentId == null)
+														{
+															<li class="comment blog-entry">
+
+																<div class="blog-header">
+
+																	@if (ViewBag.account != null && ViewBag.account.Id == commentBlog.AccountId)
+																	{
+
+																		<button class="edit-button">Edit</button>
+																		<div class="overlay">
+																			<form asp-action="EditComment" asp-controller="CommentBlog" method="post" class="edit-form">
+																				<h3 style="color: #0066ff">Your comment:</h3>
+																				<input type="hidden" name="cmId" value="@commentBlog.Id" />
+																				<input type="hidden" name="edit" value="1" />
+																				<input type="hidden" name="blogId" value="@commentBlog.BlogId" />
+																				<textarea name="content" id="comment" required style="min-width: 600px">@commentBlog.Content</textarea>
+																				<br /><button type="submit" class="update-button">Update</button>
+																			</form>
+																		</div>
+																		<form asp-action="DeleteComment" asp-controller="CommentBlog" onsubmit="return confirmSubmit()" style="display: inline-block">
+																			<input type="hidden" name="cmId" value="@commentBlog.Id" />
+																			<input type="hidden" name="blogId" value="@commentBlog.BlogId" />
+																			<input type="hidden" name="remove" value="1" />
+																			<button class="remove-button" id="removeButton">Remove</button>
+																		</form>
+																	}
+																	@if (ViewBag.account != null)
+																	{
+																		<button class="reply-button" onclick="myFunction(@commentBlog.Id)">Reply</button>
+																	}
+																</div>
+
+																<div class="" style="margin-left: 5%; border-bottom: 1px solid #cccccc">
+																	<div class="comment-author vcard">
+																		<a href="blog-user?id=${cm.account.id}">
+																			<img style="width: 50px; border-radius: 50%" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZfYb4CWzn9zbn-jLTwei46uk0dMEgMsh3gQ&s">
+																			<cite class="fn">
+																				@commentBlog.Account.FullName
+																			</cite>
+																		</a>
+																	</div>
+																	<div class="comment-meta"> <a>@(commentBlog.CreatedDate?.ToString("dd/MM/yyyy"))</a> </div>
+																	<p style="margin-left: 3%">@commentBlog.Content</p>
+																	<form asp-action="CommentBlog" asp-controller="CommentBlog" method="post" id="myDIV_@commentBlog.Id" style="display: none">
+																		<textarea style="width: 80%;
+                                                    height: 150px;
+                                                    padding: 12px 20px;
+                                                    box-sizing: border-box;
+                                                    border: 2px solid #ccc;
+                                                    border-radius: 4px;
+                                                    background-color: #f8f8f8;
+                                                    font-size: 16px;
+                                                    resize: none; display: block"
+																				  name="content" id=""></textarea>
+																		<input type="hidden" name="parentId" value="@commentBlog.Id" />
+																		<input type="hidden" name="blogId" value="@commentBlog.BlogId" />
+
+
+																		<button style="margin-bottom: 3%" type="submit" class="submit-reply">Submit</button>
+																	</form>
+																	<div class="display-reply">
+
+																		<!-- day la cho hien thi REPLY -->
+																		@foreach (CommentBlog reply in ViewBag.commentList)
+																		{
+																			@if (reply.ParentId == commentBlog.Id)
+																			{
+
+																				@if (ViewBag.account != null && ViewBag.account.Id == reply.AccountId)
+																				{
+
+																					<div class="overlay">
+																						<form asp-action="EditComment" asp-controller="CommentBlog" class="edit-form">
+																							<h3 style="color: #0066ff">Your reply:</h3>
+																							<input type="hidden" name="cmId" value="@reply.Id" />
+																							<input type="hidden" name="edit" value="1" />
+																							<input type="hidden" name="blogId" value="@reply.BlogId" />
+																							<textarea name="content" id="comment" required style="min-width: 600px"
+																									  value="@reply.Content"></textarea>
+																							<br /><button type="submit" class="update-button">Update</button>
+																						</form>
+																					</div>
+																				}
+																				<div class="reply-detail" style="margin-left: 30px">
+																					<div class="comment-author vcard">
+																						<a href="blog-$user?id=">
+																							<img style="width: 35px; border-radius: 50%" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZfYb4CWzn9zbn-jLTwei46uk0dMEgMsh3gQ&s">
+																							<cite class="fn">
+																								@reply.Account.FullName
+																							</cite>
+																						</a>
+																					</div>
+
+																					<div class="comment-meta">
+																						<a style="font-size: smaller">
+																							@(reply.CreatedDate?.ToString("dd/MM/yyyy") ?? "N/A")
+																						</a>
+																					</div>
+																					<p style="font-size: smaller; margin-left: 3%">@reply.Content</p>
+
+																					@if (ViewBag.account != null && ViewBag.account.Id == reply.AccountId)
+																					{
+																						<button class="edit-button-small edit-button">Edit</button>
+																						<form asp-action="DeleteComment" asp-controller="CommentBlog" onsubmit="return confirmSubmit()" style="display: inline-block">
+																							<input type="hidden" name="cmId" value="@reply.Id" />
+																							<input type="hidden" name="edit" value="1" />
+																							<input type="hidden" name="blogId" value="@reply.BlogId" />
+																							<button class="remove-button-small remove-button">Remove</button>
+																						</form>
+																					}
+
+
+
+																				</div>
+																			}
+																		}
+																	</div>
+																</div>
+																<!-- list END -->
+															</li>
+														}
+													}
+												}
+		
+											</ol>
+											<!-- list END -->
+											<!-- comment list END -->
+											<!-- Form -->
+											<!-- Form -->
+											@if(ViewBag.blog.IsComment == true)
+											{
+												<div class="comment-respond" id="respond">
+													<h4 class="comment-reply-title" id="reply-title">Leave a Reply <small> <a style="display:none;" href="#" id="cancel-comment-reply-link" rel="nofollow">Cancel reply</a> </small> </h4>
+
+													<form asp-action="CommentBlog" asp-controller="CommentBlog" class="comment-form" id="commentform" method="post">
+														<input type="hidden" value="@ViewBag.blog.Id" name="blogId" />
+														<input type="hidden" value="0" name="parentId" />
+
+														<p class="comment-form-comment">
+															<label for="comment">Comment</label>
+															<textarea rows="8" name="content" placeholder="Comment" id="comment" required=></textarea>
+														</p>
+														<p class="form-submit">
+															<input style="color: white;background: #990099; padding: 10px; border-radius: 8px; cursor: pointer;" onclick="checkLoginAndSubmit()" type="submit" value="Submit Comment" class="submit" id="submit" name="submit" />
+														</p>
+
+													</form>
+												</div>
+											}
+											
+											<!-- Form -->
+											<!-- Form -->
+										</div>
+									</div>
+								</div>
+
+						<!-- Left part END -->
+						
+</div>
+<!-- External JavaScripts -->
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/vendors/bootstrap/js/popper.min.js"></script>
+<script src="/assets/vendors/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
+<script src="/assets/vendors/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
+<script src="/assets/vendors/magnific-popup/magnific-popup.js"></script>
+<script src="/assets/vendors/counter/waypoints-min.js"></script>
+<script src="/assets/vendors/counter/counterup.min.js"></script>
+<script src="/assets/vendors/imagesloaded/imagesloaded.js"></script>
+<script src="/assets/vendors/masonry/masonry.js"></script>
+<script src="/assets/vendors/masonry/filter.js"></script>
+<script src="/assets/vendors/owl-carousel/owl.carousel.js"></script>
+<script src="/assets/js/functions.js"></script>
+<script src="/assets/js/contact.js"></script>
+<script src='/assets/vendors/switcher/switcher.js'></script>
+	<script>
+		function confirmSubmit() {
+			var confirmed = confirm("Are you sure to delete comment?");
+
+			if (!confirmed) {
+				return false; // Prevent form submission
+			}
+
+			// Form is confirmed, continue with submission
+			return true;
+		}
+		function myFunction(n) {
+			console.log(n);
+			console.log("ID:", "myDIV_" + n);
+			var x = document.getElementById("myDIV_" + n);
+			if (x.style.display === "none") {
+				x.style.display = "block";
+
+			} else {
+				x.style.display = "none";
+			}
+		}
+	</script>
+	<script>
+		const editButtons = document.getElementsByClassName('edit-button');
+		const overlays = document.getElementsByClassName('overlay');
+		for (let i = 0; i < editButtons.length; i++) {
+			const editButton = editButtons[i];
+			const overlay = overlays[i];
+			editButton.addEventListener('click', function () {
+				overlay.style.display = 'block';
+			});
+			overlay.addEventListener('click', function (event) {
+				if (event.target === this) {
+					this.style.display = 'none';
+				}
+			});
+		}
+	</script>
+
+</body>
+
+
+</html>

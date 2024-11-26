@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<!-- META ============================================= -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+	<meta name="robots" content="" />
+
+	<!-- DESCRIPTION -->
+	<meta name="description" content="EduChamp : Education HTML Template" />
+
+	<!-- OG -->
+	<meta property="og:title" content="EduChamp : Education HTML Template" />
+	<meta property="og:description" content="EduChamp : Education HTML Template" />
+	<meta property="og:image" content="" />
+	<meta name="format-detection" content="telephone=no">
+
+	<!-- FAVICONS ICON ============================================= -->
+	<link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png" />
+
+	<!-- PAGE TITLE HERE ============================================= -->
+	<title>EduChamp : Education HTML Template </title>
+
+	<!-- MOBILE SPECIFIC ============================================= -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!--[if lt IE 9]>
+	<script src="assets/js/html5shiv.min.js"></script>
+	<script src="assets/js/respond.min.js"></script>
+	<![endif]-->
+	<!-- All PLUGINS CSS ============================================= -->
+	<link rel="stylesheet" type="text/css" href="/assets/css/assets.css">
+
+	<!-- TYPOGRAPHY ============================================= -->
+	<link rel="stylesheet" type="text/css" href="/assets/css/typography.css">
+
+	<!-- SHORTCODES ============================================= -->
+	<link rel="stylesheet" type="text/css" href="/assets/css/shortcodes/shortcodes.css">
+
+	<!-- STYLESHEETS ============================================= -->
+	<link rel="stylesheet" type="text/css" href="/assets/css/test.css">
+	<link class="skin" rel="stylesheet" type="text/css" href="/assets/css/color/color-1.css">
+	<style>
+		.centered-container {
+			display: flex;
+			justify-content: center;
+			padding: 20px;
+		}
+
+		.blog-separator {
+			border: none;
+			border-top: 1px solid #ddd;
+			margin: 20px 0;
+		}
+
+		.post-title-with-buttons {
+			display: flex;
+			align-items: center;
+			gap: 10px; /* Khoảng cách giữa tiêu đề và các nút */
+		}
+
+		.post-title {
+			margin: 0;
+		}
+
+		.btn-accept,
+		.btn-deny {
+			padding: 5px 10px;
+			border: none;
+			border-radius: 3px;
+			cursor: pointer;
+			font-size: 14px;
+		}
+
+		/* Style cho nút Accept */
+		.btn-accept {
+			background-color: #4CAF50; /* Màu xanh lá */
+			color: white;
+		}
+
+		/* Style cho nút Deny */
+		.btn-deny {
+			background-color: #f44336; /* Màu đỏ */
+			color: white;
+		}
+	</style>
+</head>
+<body id="bg">
+	<div class="page-wraper">
+		<div id="loading-icon-bx"></div>
+
+		<!-- Header Top ==== -->
+		
+		<!-- header END ==== -->
+		<!-- Content -->
+		<div class="page-content bg-white">
+			<!-- inner page banner -->
+			<div class="page-banner ovbl-dark" style="background-image:url(assets/images/banner/banner1.jpg);">
+				<div class="container">
+					<div class="page-banner-entry">
+						<h1 class="text-white">Blog Standard Sidebar</h1>
+					</div>
+				</div>
+			</div>
+			<!-- Breadcrumb row -->
+			<div class="breadcrumb-row">
+				<div class="container">
+					<ul class="list-inline">
+						<li><a href="#">Home</a></li>
+						<li>Blog Standard Sidebar</li>
+					</ul>
+				</div>
+			</div>
+			<!-- Breadcrumb row END -->
+			<div class="content-block">
+				<div class="section-area section-sp1">
+					<div class="centered-container">
+						<div class="col-md-6 col-lg-6 col-xl-6">
+							<div class="list-blog">
+								@if (ViewBag.listBlogRequest != null)
+								{
+									@foreach (Blog blog in ViewBag.listBlogRequest)
+									{
+										<div class="recent-news blog-lg m-b40">
+											<div class="action-box blog-lg">
+												<img src="@blog.Image" alt="">
+											</div>
+											<div class="info-bx">
+												<ul class="media-post">
+													<li><a href="#"><i class="fa fa-calendar"></i>@blog.CreatedDate?.ToString("dd/MM/yyyy")</a></li>
+													<li><a href="#"><i class="fa fa-user"></i>@blog.Creator.FullName</a></li>
+												</ul>
+
+												<!-- Blog title with buttons -->
+												<div class="post-title-with-buttons">
+													<h5 class="post-title"><a href="blog-details.html">@blog.Title</a></h5>
+													<form asp-action="RequestBlog" asp-controller="Blog" method="post">
+														<input type="hidden" name="bId" value="@blog.Id" />
+														<button class="btn-accept" type="submit" name="request" value="1">Accept</button>
+														<button class="btn-deny" type="submit" name="reuest" value="2">Deny</button>
+													</form>
+
+												</div>
+
+												<p>@blog.Content</p>
+											</div>
+										</div>
+										<hr class="blog-separator">
+									}
+								}
+
+							</div>
+							
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+		<!-- Content END-->
+		<!-- Footer ==== -->
+		<!-- Footer END ==== -->
+		<!-- scroll top button -->
+	</div>
+	<!-- External JavaScripts -->
+	<script src="/assets/js/jquery.min.js"></script>
+	<script src="/assets/vendors/bootstrap/js/popper.min.js"></script>
+	<script src="/assets/vendors/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
+	<script src="/assets/vendors/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
+	<script src="/assets/vendors/magnific-popup/magnific-popup.js"></script>
+	<script src="/assets/vendors/counter/waypoints-min.js"></script>
+	<script src="/assets/vendors/counter/counterup.min.js"></script>
+	<script src="/assets/vendors/imagesloaded/imagesloaded.js"></script>
+	<script src="/assets/vendors/masonry/masonry.js"></script>
+	<script src="/assets/vendors/masonry/filter.js"></script>
+	<script src="/assets/vendors/owl-carousel/owl.carousel.js"></script>
+	<script src="/assets/js/functions.js"></script>
+	<script src="/assets/js/contact.js"></script>
+	<script src='/assets/vendors/switcher/switcher.js'></script>
+	<script>
+		/*
+		$(document).ready(function () {
+			var blogHtml = '';
+			$.ajax({
+				type: "get",
+				url: `https://localhost:5100/GetListBlogRequest`,
+				success: function (response) {
+					console.log(response.blogs);
+
+					// Clear existing blog list
+					$('.list-blog').empty();
+
+					// Populate the blog list with new data
+					$.each(response.blogs, function (index, blog) {
+						blogHtml += `
+											<div class="recent-news blog-lg m-b40">
+													<div class="action-box blog-lg">
+
+															<img src="${blog.image}" alt="">
+													</div>
+												<div class="info-bx">
+													<ul class="media-post">
+														<li><a href="#"><i class="fa fa-calendar"></i>${new Date(blog.createdDate).toLocaleDateString()}</a></li>
+																<li><a href="#"><i class="fa fa-user"></i>${blog.creator.fullName}</a></li>
+
+
+													</ul>
+													<h5 class="post-title">
+															<a href="#">${blog.title}</a>
+																			<form asp-action="RequestBlog" asp-controller="Blog" method="post">
+					<input type="hidden" name="bId value="${blog.id}" />
+			<button class="btn-accept" type="submit" name="request" value="1">Accept</button>
+			<button class="btn-deny" type="submit" name="request" value="2">Deny</button>
+		</form>
+													</h5>
+															<p>${blog.content}</p>
+													<div class="post-extra">
+														<a href="#" class="btn-link">READ MORE</a>
+														<a href="#" class="comments-bx"><i class="fa fa-comments-o"></i>${response.commentCount} Comment</a>
+													</div>
+												</div>
+											</div>`;
+						$('.list-blog').html(blogHtml);
+					});
+				},
+				error: function (xhr, status, error) {
+					console.error(error); // Handle errors
+				}
+			});
+		});
+		*/
+	</script>
+</body>
+
+</html>

@@ -25,5 +25,7 @@ public partial class Blog
 
     public virtual Account? Creator { get; set; }
 
+    public virtual ICollection<Rating> Ratings { get; set; } = new List<Rating>();
+
     public virtual ICollection<TagBlog> TagBlogs { get; set; } = new List<TagBlog>();
 }

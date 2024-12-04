@@ -51,36 +51,41 @@ namespace WebClient.Controllers
 
 		public IActionResult BlogDetail(int? id)
 		{
-			if (id == null)
-			{
-				return NotFound(); // Handle not found case
-			}
+			if (id == null) return NotFound(); // Handle not found case
 
 			// Get the logged-in user
 			Account accountLogin = GetUserLogin();
+
+			ViewBag.account = accountLogin;
 
 			// Fetch the blog with comments asynchronously
 			var blog =  context.Blogs
 									 .Include(x => x.Creator)
 									 .FirstOrDefault(x => x.Id == id);
+			ViewBag.blog = blog;
 
 
 			// Fetch total comments count and list asynchronously
 			var totalComment =  context.CommentBlogs
 											 .Count(x => x.BlogId == id);
 
-			var commentList =  context.CommentBlogs
-											.Where(x => x.BlogId == id)
-											.ToList();
-
-			ViewBag.account = accountLogin;
-			ViewBag.blog = context.Blogs
-									 .Include(x => x.Creator)
-									 .FirstOrDefault(x => x.Id == id);
-
+			//total comment
 			ViewBag.totalComment = totalComment;
-			ViewBag.commentList = context.CommentBlogs.Include(x=> x.Account).Where(x=> x.BlogId == id).ToList();
 
+			//list comment
+			var commentList = context.CommentBlogs.Include(x => x.Account).Where(x => x.BlogId == id).ToList();
+
+			ViewBag.commentList = commentList;
+
+			//rating
+			if (accountLogin != null)
+			{
+				var rating = context.Ratings.FirstOrDefault(x => x.AccountId == accountLogin.Id && x.BlogId == blog.Id);
+				ViewBag.rating = rating;
+			}
+
+			
+			
 			return View("Blog-Detail");
 		}
 

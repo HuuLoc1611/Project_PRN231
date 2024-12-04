@@ -21,6 +21,8 @@ public partial class ProjectPrn231Context : DbContext
 
     public virtual DbSet<CommentBlog> CommentBlogs { get; set; }
 
+    public virtual DbSet<Rating> Ratings { get; set; }
+
     public virtual DbSet<Tag> Tags { get; set; }
 
     public virtual DbSet<TagBlog> TagBlogs { get; set; }
@@ -30,6 +32,7 @@ public partial class ProjectPrn231Context : DbContext
         var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
         optionsBuilder.UseSqlServer(config.GetConnectionString("MyCnn"));
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Account>(entity =>
@@ -72,6 +75,27 @@ public partial class ProjectPrn231Context : DbContext
             entity.HasOne(d => d.Blog).WithMany(p => p.CommentBlogs)
                 .HasForeignKey(d => d.BlogId)
                 .HasConstraintName("FK_CommentBlog_Blog");
+        });
+
+        modelBuilder.Entity<Rating>(entity =>
+        {
+            entity.ToTable("Rating");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.AccountId).HasColumnName("account_id");
+            entity.Property(e => e.BlogId).HasColumnName("blog_id");
+            entity.Property(e => e.CreatedDate)
+                .HasColumnType("date")
+                .HasColumnName("created_date");
+            entity.Property(e => e.Quality).HasColumnName("quality");
+
+            entity.HasOne(d => d.Account).WithMany(p => p.Ratings)
+                .HasForeignKey(d => d.AccountId)
+                .HasConstraintName("FK_Rating_Account");
+
+            entity.HasOne(d => d.Blog).WithMany(p => p.Ratings)
+                .HasForeignKey(d => d.BlogId)
+                .HasConstraintName("FK_Rating_Blog");
         });
 
         modelBuilder.Entity<Tag>(entity =>

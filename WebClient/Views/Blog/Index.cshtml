@@ -97,11 +97,12 @@
                             <!-- Left part start -->
                             <div class="col-md-7 col-lg-8 col-xl-8 ">
                               
-                                @foreach (Blog blog in ViewBag.ListBlog)
-                                {
+                               
                                    
                                         <div class="post action-card col-xl-6 col-lg-6 col-md-12 col-xs-12 m-b40">
                                         <div class="list-blog">
+                                        @foreach (Blog blog in ViewBag.ListBlog)
+                                        {
                                             <div class="recent-news blog-lg m-b40">
                                                 <div class="action-box">
                                                     <img src="@blog.Image" alt="">
@@ -121,12 +122,13 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        }
                                             </div>
 
                                             
                                        
                                     </div>
-                                }
+                                
                                
 
                                
@@ -267,10 +269,10 @@
         });*/
 
         $('.filterBlog').on('click input', function () {
-            var searchName = $('#searchName').val().trim();
-            var searchTag = $('#searchTag').val().trim();
-            var dateFrom = $('#dateFrom').val().trim();
-            var dateTo = $('#dateTo').val().trim();
+            var searchName = $('#searchName').val();
+            var searchTag = $('#searchTag').val();
+            var dateFrom = $('#dateFrom').val();
+            var dateTo = $('#dateTo').val();
 
             console.log("Search name: " + searchName);
             console.log("searchTag: " + searchTag);
@@ -297,6 +299,7 @@
 
                     // Populate the blog list with new data
                     $.each(response.blogs, function (index, blog) {
+                        
                         var imageUrl = blog.image ? blog.image : "";
                         blogHtml += `
                                     <div class="recent-news blog-lg m-b40">

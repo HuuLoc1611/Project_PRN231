@@ -50,8 +50,8 @@
     <link class="skin" rel="stylesheet" type="text/css" href="assets/css/color/color-1.css">
     <style>
         /* Style for horizontal blog item */
-        
-        .media-post{
+
+        .media-post {
             list-style-type: none; /* Xóa dấu chấm */
             padding: 0; /* Xóa khoảng cách mặc định bên trong */
             margin: 0; /* Xóa khoảng cách mặc định bên ngoài */
@@ -64,7 +64,6 @@
         <div id="loading-icon-bx"></div>
 
         <!-- Header Top ==== -->
-
         <!-- header END ==== -->
         <!-- Content -->
         <div class="page-content bg-white">
@@ -96,11 +95,11 @@
                         <div class="row">
                             <!-- Left part start -->
                             <div class="col-md-7 col-lg-8 col-xl-8 ">
-                              
-                               
-                                   
-                                        <div class="post action-card col-xl-6 col-lg-6 col-md-12 col-xs-12 m-b40">
-                                        <div class="list-blog">
+
+
+
+                                <div class="post action-card col-xl-6 col-lg-6 col-md-12 col-xs-12 m-b40">
+                                    <div class="list-blog">
                                         @foreach (Blog blog in ViewBag.ListBlog)
                                         {
                                             <div class="recent-news blog-lg m-b40">
@@ -123,15 +122,15 @@
                                                 </div>
                                             </div>
                                         }
-                                            </div>
-
-                                            
-                                       
                                     </div>
-                                
-                               
 
-                               
+
+
+                                </div>
+
+
+
+
 
                                 <!-- Pagination start -->
                                 <div class="pagination-bx rounded-sm gray clearfix">
@@ -151,50 +150,63 @@
                                 <aside class="side-bar sticky-top">
                                     <div class="widget">
                                         <br />
-                                        <h6 class="widget-title">Search by blog name</h6>
-                                        <div class="search-bx style-1">
-                                            <form role="search" method="post">
-                                                <div class="input-group">
-                                                    <input id="searchName" name="text" class="form-control filterBlog" placeholder="Search blog by name..." type="text">
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <br />
-                       
-                                        <h6 class="widget-title">Date from</h6>
-                                        <div class="search-bx style-1">
-                                            <form role="search" method="post">
-                                                <div class="input-group">
-                                                    <input id="dateFrom" name="text" class="form-control filterBlog" type="date">
-                                                </div>
-                                            </form>
+                                        <form id="filterForm">
+
+                                            <h6 class="widget-title">Search by blog name</h6>
+                                            <div class="search-bx style-1">
+                                                <form role="search" method="post">
+                                                    <div class="input-group">
+                                                        <input id="searchName" name="text" class="form-control filterBlog" placeholder="Search blog by name..." type="text">
+                                                    </div>
+                                                </form>
+                                            </div>
                                             <br />
-                                        </div>
-                                        <h6 class="widget-title">Date to</h6>
-                                        <div class="search-bx style-1">
-                                            <form role="search" method="post">
-                                                <div class="input-group">
-                                                    <input id="dateTo" name="text" class="form-control filterBlog" type="date">
+
+                                            <h6 class="widget-title">Date from</h6>
+                                            <div class="search-bx style-1">
+                                                <form role="search" method="post">
+                                                    <div class="input-group">
+                                                        <input id="dateFrom" name="text" class="form-control filterBlog" type="date">
+                                                    </div>
+                                                </form>
+                                                <br />
+                                            </div>
+                                            <h6 class="widget-title">Date to</h6>
+                                            <div class="search-bx style-1">
+                                                <form role="search" method="post">
+                                                    <div class="input-group">
+                                                        <input id="dateTo" name="text" class="form-control filterBlog" type="date">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <h6 class="widget-title">Sort by rating</h6>
+                                            <div class="search-bx style-1">
+                                                <!-- Radio buttons for sorting -->
+                                                <div class="sort-options">
+                                                    <label for="sortAsc">
+                                                        <input type="radio" id="sortAsc" class="form-control filterBlog" name="sortOrder" value="asc"> Ascending        
+                                                    </label> &nbsp;&nbsp;
+                                                    <label for="sortDesc">
+                                                        <input type="radio" id="sortDesc" class="form-control filterBlog" name="sortOrder" value="desc"> Descending
+                                                    </label>
                                                 </div>
+                                            </div>
                                             </form>
-                                        </div>
-
-
                                     </div>
-                        </aside>
-                    </div>
+                                </aside>
+                            </div>
                         </div>
-                    <!-- Side bar END -->
+                        <!-- Side bar END -->
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
- 
-    <!-- Content END-->
-    <!-- Footer ==== -->
-    <!-- Footer END ==== -->
-    <!-- scroll top button -->
-    <button class="back-to-top fa fa-chevron-up"></button>
+
+        <!-- Content END-->
+        <!-- Footer ==== -->
+        <!-- Footer END ==== -->
+        <!-- scroll top button -->
+        <button class="back-to-top fa fa-chevron-up"></button>
     </div>
     <!-- External JavaScripts -->
     <script src="assets/js/jquery.min.js"></script>
@@ -214,7 +226,7 @@
     <script src='assets/vendors/switcher/switcher.js'></script>
     <script>
 
-        function like(n){
+        function like(n) {
             var number = $('#total-like-' + n).text().trim();
             console.log(number);
             var like = parseInt(number);
@@ -269,60 +281,73 @@
         });*/
 
         $('.filterBlog').on('click input', function () {
+
+            var sort = ''; // To store the sort order (asc, desc)
+
+            // Get selected sort order
+            if ($('#sortAsc').is(':checked')) {
+                sort = 'asc'; // If Ascending is selected
+            } else if ($('#sortDesc').is(':checked')) {
+                sort = 'desc'; // If Descending is selected
+            }
+
             var searchName = $('#searchName').val();
             var searchTag = $('#searchTag').val();
             var dateFrom = $('#dateFrom').val();
             var dateTo = $('#dateTo').val();
 
+
             console.log("Search name: " + searchName);
             console.log("searchTag: " + searchTag);
             console.log("dateFrom: " + dateFrom);
             console.log("dateTo: " + dateTo);
+            console.log("Sort order: " + sort);
+
 
             var blogHtml = '';
 
             $.ajax({
                 type: "get",
-                url: `https://localhost:5100/GetListBlog?searchName=${searchName}&dateFrom=${dateFrom}&dateTo=${dateTo}`,
+                url: `https://localhost:5100/GetListBlog?searchName=${searchName}&dateFrom=${dateFrom}&dateTo=${dateTo}&sort${sort}`,
                 dataType: "json",
                 data: {
                     searchName: searchName,
                     searchTag: searchTag,
                     dateFrom: dateFrom,
-                    dateTo: dateTo
+                    dateTo: dateTo,
+                    sort: sort
                 },
                 success: function (response) {
-                    console.log(response.blogs);
-
+                    console.log(response.sort);
                     // Clear existing blog list
                     $('.list-blog').empty();
 
                     // Populate the blog list with new data
                     $.each(response.blogs, function (index, blog) {
-                        
+
                         var imageUrl = blog.image ? blog.image : "";
                         blogHtml += `
-                                    <div class="recent-news blog-lg m-b40">
-                                            <div class="action-box blog-lg">
+                                                    <div class="recent-news blog-lg m-b40">
+                                                            <div class="action-box blog-lg">
 
-                                                            <img src="${imageUrl}" alt="">
-                                            </div>
-                                        <div class="info-bx">
-                                            <ul class="media-post">
-                                                <li><a href="#"><i class="fa fa-calendar"></i>${new Date(blog.createdDate).toLocaleDateString()}</a></li>
-                                                        <li><a href="#"><i class="fa fa-user"></i>${blog.creator.fullName}</a></li>
+                                                                            <img src="${imageUrl}" alt="">
+                                                            </div>
+                                                        <div class="info-bx">
+                                                            <ul class="media-post">
+                                                                <li><a href="#"><i class="fa fa-calendar"></i>${new Date(blog.createdDate).toLocaleDateString()}</a></li>
+                                                                        <li><a href="#"><i class="fa fa-user"></i>${blog.creator.fullName}</a></li>
 
-                                            </ul>
-                                                    <h5 class="post-title">
-                                                            <a href="/Blog/BlogDetail/${blog.id}">${blog.title}</a>
-                                                    </h5>
-                                                    <p>${blog.content}</p>
-                                            <div class="post-extra">
-                                                <a href="#" class="btn-link">READ MORE</a>
-                                                <a href="#" class="comments-bx"><i class="fa fa-comments-o"></i>${response.commentCount} Comment</a>
-                                            </div>
-                                        </div>
-                                    </div>`;
+                                                            </ul>
+                                                                    <h5 class="post-title">
+                                                                            <a href="/Blog/BlogDetail/${blog.id}">${blog.title}</a>
+                                                                    </h5>
+                                                                    <p>${blog.content}</p>
+                                                            <div class="post-extra">
+                                                                <a href="#" class="btn-link">READ MORE</a>
+                                                                <a href="#" class="comments-bx"><i class="fa fa-comments-o"></i>${response.commentCount} Comment</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>`;
                         $('.list-blog').html(blogHtml);
                     });
                 },

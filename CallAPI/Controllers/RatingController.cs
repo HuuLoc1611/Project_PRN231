@@ -16,7 +16,10 @@ namespace CallAPI.Controllers
         {
             var rating = context.Ratings.Where(x => x.BlogId == blogId).ToList();
 
-            if (rating != null) return Ok(rating);
+            var totalRate = rating.Sum(x => x.Quality);
+            var average = Math.Round((double)totalRate / rating.Count, 1);
+
+            if (rating != null) return Ok(average);
 
 			else return NotFound();
 

@@ -1,5 +1,6 @@
 ﻿using CallAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace CallAPI.Controllers
@@ -13,7 +14,7 @@ namespace CallAPI.Controllers
 		//get all blog va filter
 
 		[HttpGet("GetListBlog")]
-		public IActionResult GetListBlog(string? searchName, DateTime? dateFrom, DateTime? dateTo)
+		public IActionResult GetListBlog(string? searchName, DateTime? dateFrom, DateTime? dateTo, string? sort)
 		{
 			var blogs = context.Blogs.Include(x => x.Creator).Where(x=> x.Status == true).
 				OrderByDescending(x => x.Id).Select(x => new
@@ -23,12 +24,16 @@ namespace CallAPI.Controllers
 					Image = x.Image,
 					CreatedDate = x.CreatedDate,
 					Content = x.Content,
+					
 					Creator = new Account
 					{
 						FullName = x.Creator.FullName,
-					}
-				}).ToList();
+					},
 
+                    AverageRating = x.Ratings.Any() ? x.Ratings.Average(r => r.Quality) : 0
+                }).ToList();
+			
+			
 			List<CommentBlog> commentBlogs = context.CommentBlogs.ToList();
 
 			//filter by title
@@ -49,11 +54,23 @@ namespace CallAPI.Controllers
 				blogs = blogs.Where(x => x.CreatedDate <= dateTo.Value).ToList();
 			}
 
+			if (!string.IsNullOrEmpty(sort))
+			{
+				if (sort.Equals("asc"))
+				{
+					blogs = blogs.OrderBy(x => x.AverageRating).ToList();
+				}else
+				{
+                    blogs = blogs.OrderByDescending(x => x.AverageRating).ToList();
+                }
+			}
+
 			var response = new
 			{
 				blogs = blogs, // Your filtered blog list
 				commentCount = commentBlogs.Count, // Comment count
-			};
+                sort = sort
+            };
 
 			return Ok(response);
 		}

@@ -40,6 +40,7 @@ public partial class ProjectPrn231Context : DbContext
             entity.ToTable("Account");
 
             entity.Property(e => e.FullName).HasColumnName("Full_Name");
+            entity.Property(e => e.IsMember).HasColumnName("Is_Member");
         });
 
         modelBuilder.Entity<Blog>(entity =>

@@ -19,7 +19,10 @@ else
             <li style="margin-right: 3vh" class="nav-item">
                 <a class=" btn btn-outline-info  text-dark" asp-area="" asp-controller="Blog" asp-action="MyBlog" asp-route-id ="@userLogin.Id">My Blog</a>
             </li>
-            
+
+            <li style="margin-right: 3vh" class="nav-item">
+                <a class=" btn btn-outline-info  text-dark" asp-area="" asp-controller="Account" asp-action="Profile">Profile</a>
+            </li>
         }
         @if (userLogin.Role == 2)
         {

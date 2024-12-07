@@ -281,6 +281,7 @@
 										<p>@ViewBag.blog.Content</p>
 										<div class="rating-container">
 											<h2>Rate this:</h2>
+											<form id="rating-form">
 											<div class="stars">
 												@if (ViewBag.rating != null && ViewBag.rating.Quality != null)
 												{
@@ -319,7 +320,7 @@
 												}
 											</div>
 											<p id="rating-display">Average rated: <span id="rating-value">0</span> stars</p>
-											<form>
+											
 												@if (ViewBag.account != null)
 												{
 													<input type="hidden" name="name" id="account-id" value="@ViewBag.account.Id" />
@@ -559,6 +560,10 @@
 		}
 	</script>
 							<script>
+								$(document).ready(function () {
+									loadRating($('#blog-id').val());
+								});
+
 								function updateRating(n) {
 									const data = {
 										AccountId: $('#account-id').val(),
@@ -566,14 +571,11 @@
 										Quality: n,
 										Id: $('#rating-id').val(),
 									};
-
 									if (!data.AccountId || !data.BlogId) {
 										alert('Please login to rate');
+										window.location.href = 'https://localhost:5000/Account/Login';
 										return;
-									}
-
-									
-
+									}	
 									const method = data.Id ? 'PUT' : 'POST';
 									const url = `https://localhost:5100/api/Rating`;
 
@@ -586,6 +588,7 @@
 										data: JSON.stringify(data),
 										success: function (receivedData) {
 											alert('Rating successfully updated!');
+											loadRating(data.BlogId);
 											console.log(receivedData);
 										},
 										error: function (err) {
@@ -594,10 +597,23 @@
 										}
 									});
 								}
+								function loadRating(blogId) {
+									$.ajax({
+										type: "GET",
+										url: `https://localhost:5100/api/Rating/${blogId}`,
+										contentType: "application/json",
+										success: function (receivedData) {
+											// Assuming receivedData contains the average rating value
+											$('#rating-value').text(receivedData); // Update the DOM
+											console.log('Rating loaded successfully:', receivedData);
+										},
+										error: function (err) {
 
-								function loadRating(){
-
+											console.error(err);
+										}
+									});
 								}
+							
 	</script>
 </body>
 

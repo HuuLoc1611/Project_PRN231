@@ -27,19 +27,19 @@ public partial class ProjectPrn231Context : DbContext
 
     public virtual DbSet<TagBlog> TagBlogs { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-        optionsBuilder.UseSqlServer(config.GetConnectionString("MyCnn"));
-    }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+	{
+		var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+		optionsBuilder.UseSqlServer(config.GetConnectionString("MyCnn"));
+	}
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Account>(entity =>
         {
             entity.ToTable("Account");
 
             entity.Property(e => e.FullName).HasColumnName("Full_Name");
+            entity.Property(e => e.IsMember).HasColumnName("Is_Member");
         });
 
         modelBuilder.Entity<Blog>(entity =>

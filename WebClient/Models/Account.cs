@@ -17,7 +17,9 @@ public partial class Account
 
     public string? FullName { get; set; }
 
-    public string? Phone { get; set; }
+    public bool? IsMember { get; set; }
+
+    public string? Image { get; set; }
 
     public virtual ICollection<Blog> Blogs { get; set; } = new List<Blog>();
 

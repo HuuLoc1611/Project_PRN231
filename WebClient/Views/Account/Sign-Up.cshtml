@@ -111,20 +111,33 @@
 <body>
 
     <div class="login-form">
-        <h2>Login</h2>
+        <h2>SignUp</h2>
         <h3>@ViewBag.error</h3>
-        <form asp-action="Login" asp-controller="Account" method="POST">
+        <form asp-action="SignUp" asp-controller="Account" method="POST">
+
             <div class="form-group">
-                <input type="text" id="username" name="username" required placeholder=" " value="@ViewBag.username" />
+                <input type="email" id="email" name="Email" required  placeholder="" value="@ViewBag.email" />
+                <label for="email">Email</label>
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="username" name="Username" required placeholder=" " value="@ViewBag.username" />
                 <label for="username">Username</label>
             </div>
             <div class="form-group">
-                <input type="password" id="password" name="password" required placeholder=" " value="@ViewBag.password" />
+                <input type="password" id="password" name="Password" required placeholder=" " value="@ViewBag.password" />
                 <label for="password">Password</label>
             </div>
-            <button type="submit" class="login-btn">Log In</button>
+
+            <div class="form-group">
+                <input type="password" id="password" name="ConfirmPassword" required placeholder=" " value="@ViewBag.confirmPassword" />
+            <label for="password">Confirm Password</label>
+            </div>
+
+            <button type="submit" class="login-btn">Sign-Up</button>
+            <p style="color: darkred">@ViewBag.message</p>
         </form>
-        <p>Don't have an account? <a href="/account/signup" style="color: #4b6cb7;">Sign up here</a></p>
+        <p>Do you have an account? <a href="/Account/Login" style="color: #4b6cb7;">Login here</a></p>
     </div>
 
 </body>

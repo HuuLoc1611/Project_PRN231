@@ -1,3 +1,5 @@
+using WebClient.Services.VnPay;
+
 namespace WebClient
 {
     public class Program
@@ -22,7 +24,7 @@ namespace WebClient
                 options.Cookie.HttpOnly = true;                // Restrict cookie to HTTP access
                 options.Cookie.IsEssential = true;             // Essential for session functionality
             });
-
+            builder.Services.AddScoped<IVnPayService, VnPayService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline

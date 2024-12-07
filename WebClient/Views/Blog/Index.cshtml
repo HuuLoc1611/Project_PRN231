@@ -76,9 +76,30 @@
                 </div>
 
             </div>
-            <div class="container mt-3">
-                <a href="/Blog/WriteBlog" class="btn btn-primary">Write Blog</a>
-            </div>
+            @if (ViewBag.account != null )
+            {
+                @if (ViewBag.account.IsMember == false)
+                {
+                    <div class="container mt-3">
+                        <form asp-controller="Payment" asp-action="CreatePaymentUrlVnpay" method="get">
+                            <input type="hidden" name="Amount" value="10000" />
+                            <input type="hidden" name="OrderDescription" value="No">
+                            <input type="hidden" name="Name" value="@ViewBag.account.FullName">
+                            <input type="hidden" name="accountId" value="@ViewBag.account.Id" />
+                            <input type="hidden" name="OrderType" value="other" />
+                            <button type="submit" onclick="clickWriteBlog()" class="btn btn-primary">Write Blog</button>
+                        </form>
+
+                    </div>
+                }
+                else
+                {
+                    <form>
+                        <button type="submit" href="/Blog/WriteBlog" class="btn btn-primary">Write Blog</button>
+                    </form>
+                }
+            } 
+            
             <!-- Breadcrumb row -->
             <div class="breadcrumb-row">
                 <div class="container">
@@ -226,13 +247,8 @@
     <script src='assets/vendors/switcher/switcher.js'></script>
     <script>
 
-        function like(n) {
-            var number = $('#total-like-' + n).text().trim();
-            console.log(number);
-            var like = parseInt(number);
-            $('#total-like-' + n).html(like + 1);
-
-            $('like-button-' + n).hide();
+        function clickWriteBlog() {
+            alert("You must be a member to write blog");
         }
 
         /*$(document).ready(function () {

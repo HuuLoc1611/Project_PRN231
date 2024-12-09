@@ -86,10 +86,7 @@ namespace WebClient.Controllers
                 {
                     if (res.StatusCode == System.Net.HttpStatusCode.OK)
                     {
-                        string userJson = JsonConvert.SerializeObject(account);
-                        HttpContext.Session.SetString("User", userJson);
-
-                        return RedirectToAction("Index", "Blog");
+                        return RedirectToAction("Login", "Account");
                     }
                     else
                     {

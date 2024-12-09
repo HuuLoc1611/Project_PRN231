@@ -49,6 +49,7 @@ namespace WebClient.Controllers
 		}
 
 
+		//xem detail blog
 		public IActionResult BlogDetail(int? id)
 		{
 			if (id == null) return NotFound(); // Handle not found case
@@ -91,6 +92,7 @@ namespace WebClient.Controllers
 
 
 		[HttpGet]
+		// index den trang write blog
 		public IActionResult WriteBlog()
 		{
 			// chua login thi login
@@ -102,6 +104,7 @@ namespace WebClient.Controllers
 		}
 
         [HttpPost]
+		//tao 1 blog moi
         public async Task<IActionResult> CreateBlog(string title, string content, IFormFile image, bool allowComments = false)
         {
 			Blog blog = new Blog();
@@ -260,7 +263,7 @@ namespace WebClient.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-			if(GetUserLogin().Role != context.Blogs.Include(x => x.Creator).FirstOrDefault(x => x.Id == id).CreatorId)
+			if(GetUserLogin().Id != context.Blogs.Include(x => x.Creator).FirstOrDefault(x => x.Id == id).CreatorId)
 			{
                 return RedirectToAction("Index", "Blog");
             }

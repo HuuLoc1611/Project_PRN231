@@ -39,6 +39,8 @@ namespace CallAPI.Controllers
             else return BadRequest();
         }
 
+
+        //update profile
         [HttpPut]
         public IActionResult UpdateProfile([FromBody] Account account)
         {
@@ -55,11 +57,26 @@ namespace CallAPI.Controllers
             else return BadRequest();
         }
 
+        //lấy account by id
         [HttpGet("{Id}")]
         public IActionResult GetAccountById(int Id)
         {
             var accountCheck = context.Accounts.FirstOrDefault(x => x.Id == Id);
             if (accountCheck == null) return NotFound();
+
+            return Ok(accountCheck);
+        }
+
+        //neu thanh toán thì là member để viết blog
+        [HttpPut("UpdateMember")]
+        public IActionResult UpdateMember([FromBody] Account account)
+        {
+            var accountCheck = context.Accounts.FirstOrDefault(x => x.Id == account.Id);
+            if (accountCheck == null) return NotFound();
+
+            accountCheck.IsMember = true;
+            context.Accounts.Update(accountCheck);
+            context.SaveChanges();
 
             return Ok(accountCheck);
         }

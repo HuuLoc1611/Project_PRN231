@@ -54,14 +54,9 @@ namespace WebClient.Controllers
         [HttpGet]
 		public async Task<IActionResult> Logout()
 		{
-
 			HttpContext.Session.Remove("User");
 
-			// Optionally, you might want to sign out the user from authentication
-			// await HttpContext.SignOutAsync(); // Uncomment if using ASP.NET Identity
-
 			return RedirectToAction("Index", "Blog");
-
 		}
 
 		[HttpGet]
@@ -70,14 +65,11 @@ namespace WebClient.Controllers
 			return View("Sign-Up");
 		}
 
+        // dang ki nguoi dung
 		[HttpPost]
 		public async Task<IActionResult> SignUp([Bind("Email, Username, Password")] Account account, [Bind("ConfirmPassword")] string confirmPassword)
 		{
             string url = "https://localhost:5100/api/Account/SignUp";
-			ViewBag.email = "";
-            ViewBag.username = "";
-            ViewBag.password = "";
-            ViewBag.confirmPassword = "";
             if (!confirmPassword.Equals(account.Password))
             {
                 ViewBag.message = "Password and Confirm Password do not match.";
@@ -94,6 +86,9 @@ namespace WebClient.Controllers
                 {
                     if (res.StatusCode == System.Net.HttpStatusCode.OK)
                     {
+                        string userJson = JsonConvert.SerializeObject(account);
+                        HttpContext.Session.SetString("User", userJson);
+
                         return RedirectToAction("Index", "Blog");
                     }
                     else
@@ -114,12 +109,9 @@ namespace WebClient.Controllers
 		[HttpGet]
 		public IActionResult Profile()
 		{
-            var userJson = HttpContext.Session.GetString("User");
-            Account account = JsonConvert.DeserializeObject<Account>(userJson);
+            if (GetUserLogin() == null) return View("Login");
 
-            if (account == null) return View("Login");
-
-            ViewBag.account = account;
+            ViewBag.account = GetUserLogin();
 			return View("Profile");
 		}
 

@@ -27,12 +27,15 @@ public partial class ProjectPrn231Context : DbContext
 
     public virtual DbSet<TagBlog> TagBlogs { get; set; }
 
-	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-	{
-		var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-		optionsBuilder.UseSqlServer(config.GetConnectionString("MyCnn"));
-	}
-	protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public virtual DbSet<Transaction> Transactions { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        optionsBuilder.UseSqlServer(config.GetConnectionString("MyCnn"));
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Account>(entity =>
         {
@@ -118,6 +121,18 @@ public partial class ProjectPrn231Context : DbContext
             entity.HasOne(d => d.Tag).WithMany(p => p.TagBlogs)
                 .HasForeignKey(d => d.TagId)
                 .HasConstraintName("FK_TagBlog_Tag");
+        });
+
+        modelBuilder.Entity<Transaction>(entity =>
+        {
+            entity.ToTable("Transaction");
+
+            entity.Property(e => e.AccountId).HasColumnName("Account_Id");
+            entity.Property(e => e.Date).HasColumnType("date");
+
+            entity.HasOne(d => d.Account).WithMany(p => p.Transactions)
+                .HasForeignKey(d => d.AccountId)
+                .HasConstraintName("FK_Transaction_Account");
         });
 
         OnModelCreatingPartial(modelBuilder);

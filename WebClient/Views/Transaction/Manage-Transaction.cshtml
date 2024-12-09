@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "Manage Transactions";
+}
+
+<h2>Manage Transactions</h2>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+
+<!-- Table Structure -->
+<table id="tblClubs" class="table table-hover table-striped">
+    <thead class="table-primary">
+        <tr>
+            <th>Id</th>
+            <th>Date</th>
+            <th>Full Name</th>
+            <th>Username</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Data will be dynamically populated -->
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        fetchData(); // Gọi hàm fetchData để lấy dữ liệu trước.
+
+        // Khởi tạo DataTable sau khi dữ liệu được nạp
+    });
+
+    function fetchData() {
+        $.ajax({
+            type: "GET",
+            url: "https://localhost:5100/api/Transaction",
+            dataType: "json",
+            success: function (receivedData) {
+                var tbodyHtml = '';
+
+                $.each(receivedData, function (index, transaction) {
+                    // Format date to dd/mm/yyyy
+                    const formattedDate = formatDate(transaction.date);
+
+                    tbodyHtml += `
+                            <tr>
+                                    <td>${transaction.id}</td>
+                                <td>${formattedDate}</td>
+                                    <td>${transaction.account.fullName}</td>
+                                    <td>${transaction.account.username}</td>
+                                    <td>${transaction.price}</td>
+                            </tr>
+                        `;
+                });
+
+                // Sau khi dữ liệu đã được thêm vào bảng, khởi tạo DataTable
+                $('#tblClubs tbody').html(tbodyHtml);
+                new DataTable('#tblClubs', {
+                    
+                });
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    }
+</script>

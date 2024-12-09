@@ -26,4 +26,6 @@ public partial class Account
     public virtual ICollection<CommentBlog> CommentBlogs { get; set; } = new List<CommentBlog>();
 
     public virtual ICollection<Rating> Ratings { get; set; } = new List<Rating>();
+
+    public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
 }

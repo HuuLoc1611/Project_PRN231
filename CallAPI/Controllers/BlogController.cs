@@ -5,168 +5,164 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CallAPI.Controllers
 {
-	public class BlogController : Controller
-	{
+    public class BlogController : Controller
+    {
 
-		ProjectPrn231Context context = new ProjectPrn231Context();
+        ProjectPrn231Context context = new ProjectPrn231Context();
 
 
-		//get all blog va filter
+        //get all blog va filter
 
-		[HttpGet("GetListBlog")]
-		public IActionResult GetListBlog(string? searchName, DateTime? dateFrom, DateTime? dateTo, string? sort)
-		{
-			var blogs = context.Blogs.Include(x => x.Creator).Where(x=> x.Status == true).
-				OrderByDescending(x => x.Id).Select(x => new
-				{
-					id = x.Id,
-					Title = x.Title,
-					Image = x.Image,
-					CreatedDate = x.CreatedDate,
-					Content = x.Content,
-					
-					Creator = new Account
-					{
-						FullName = x.Creator.FullName,
-					},
+        [HttpGet("GetListBlog")]
+        public IActionResult GetListBlog(string? searchName, DateTime? dateFrom, DateTime? dateTo, string? sort)
+        {
+            var blogs = context.Blogs.Include(x => x.Creator).Where(x => x.Status == true).
+                OrderByDescending(x => x.Id).Select(x => new
+                {
+                    id = x.Id,
+                    Title = x.Title,
+                    Image = x.Image,
+                    CreatedDate = x.CreatedDate,
+                    Content = x.Content,
+
+                    Creator = new Account
+                    {
+                        FullName = x.Creator.FullName,
+                    },
 
                     AverageRating = x.Ratings.Any() ? x.Ratings.Average(r => r.Quality) : 0
                 }).ToList();
-			
-			
-			List<CommentBlog> commentBlogs = context.CommentBlogs.ToList();
 
-			//filter by title
-			if (!string.IsNullOrEmpty(searchName))
-			{
-				blogs = blogs.Where(x => x.Title.ToLower().Contains(searchName)).ToList();
-			}
 
-			//filter by date
-			if (dateFrom.HasValue)
-			{
-				blogs = blogs.Where(x => x.CreatedDate >= dateFrom.Value).ToList();
-			}
+            List<CommentBlog> commentBlogs = context.CommentBlogs.ToList();
 
-			// Lọc theo ngày kết thúc
-			if (dateTo.HasValue)
-			{
-				blogs = blogs.Where(x => x.CreatedDate <= dateTo.Value).ToList();
-			}
+            //filter by title
+            if (!string.IsNullOrEmpty(searchName))
+                blogs = blogs.Where(x => x.Title.ToLower().Contains(searchName)).ToList();
 
-			if (!string.IsNullOrEmpty(sort))
-			{
-				if (sort.Equals("asc"))
-				{
-					blogs = blogs.OrderBy(x => x.AverageRating).ToList();
-				}else
-				{
+            //filter by date
+            if (dateFrom.HasValue)
+                blogs = blogs.Where(x => x.CreatedDate >= dateFrom.Value).ToList();
+
+            // Lọc theo ngày kết thúc
+            if (dateTo.HasValue)
+                blogs = blogs.Where(x => x.CreatedDate <= dateTo.Value).ToList();
+
+            if (!string.IsNullOrEmpty(sort))
+            {
+                if (sort.Equals("asc"))
+                {
+                    blogs = blogs.OrderBy(x => x.AverageRating).ToList();
+                }
+                else
+                {
                     blogs = blogs.OrderByDescending(x => x.AverageRating).ToList();
                 }
-			}
+            }
 
-			var response = new
-			{
-				blogs = blogs, // Your filtered blog list
-				commentCount = commentBlogs.Count, // Comment count
+            var response = new
+            {
+                blogs = blogs, // Your filtered blog list
+                commentCount = commentBlogs.Count, // Comment count
                 sort = sort
             };
 
-			return Ok(response);
-		}
+            return Ok(response);
+        }
 
 
-		//xem list blog cua user do
-		[HttpGet("GetListBlogByUserId/{userId}")]
-		public IActionResult GetListBlogByUserId(int userId)
-		{
-			var blogs = context.Blogs.Include(x => x.Creator).Where(x => x.CreatorId == userId && x.Status == true).
-				OrderByDescending(x => x.Id).Select(x => new
-				{
-					id = x.Id,
-					Title = x.Title,
-					Image = x.Image,
-					CreatedDate = x.CreatedDate,
-					Content = x.Content,
-					Creator = new Account
-					{
-						FullName = x.Creator.FullName,
-					}
-				}).ToList();
-			return Ok(blogs);
-		}
+        //xem list blog cua user do
+        [HttpGet("GetListBlogByUserId/{userId}")]
+        public IActionResult GetListBlogByUserId(int userId)
+        {
+            var blogs = context.Blogs.Include(x => x.Creator).Where(x => x.CreatorId == userId && x.Status == true).
+                OrderByDescending(x => x.Id).Select(x => new
+                {
+                    id = x.Id,
+                    Title = x.Title,
+                    Image = x.Image,
+                    CreatedDate = x.CreatedDate,
+                    Content = x.Content,
+                    Creator = new Account
+                    {
+                        FullName = x.Creator.FullName,
+                    }
+                }).ToList();
+            return Ok(blogs);
+        }
 
-		//blog detail
-		[HttpGet("GetBlogById/{id}")]
-		public IActionResult GetBlogById(int id)
-		{
-			var blog = context.Blogs.Include(x => x.Creator).Select(x => new
-			{
-				Id = id,
-				Title = x.Title,
-				CreatedDate = x.CreatedDate,
-				Image = x.Image,
-				Creator = new Account
-				{
-					Id = x.Id,
-					FullName = x.Creator.FullName
-				}
-			}).FirstOrDefault(x => x.Id == id);
+        //blog detail
+        [HttpGet("GetBlogById/{id}")]
+        public IActionResult GetBlogById(int id)
+        {
+            var blog = context.Blogs.Include(x => x.Creator).Select(x => new
+            {
+                Id = id,
+                Title = x.Title,
+                CreatedDate = x.CreatedDate,
+                Image = x.Image,
+                Creator = new Account
+                {
+                    Id = x.Id,
+                    FullName = x.Creator.FullName
+                }
+            }).FirstOrDefault(x => x.Id == id);
 
-			var commentList = context.CommentBlogs.Where(x => x.BlogId == id).ToList();
+            var commentList = context.CommentBlogs.Where(x => x.BlogId == id).ToList();
 
-			var totalComment = commentList.Count;
+            var totalComment = commentList.Count;
 
-			var response = new
-			{
-				blog = blog,
-				commentList = commentList,
-				totalComment = totalComment
-			};
-			if (blog != null)
-			{
-				return Ok(response);
-			}
-			else
-			{
-				return NotFound();
-			}
-		}
-
-
-		//duyet blog xem co duoc up khong
-		[HttpPut("UpdateStatusBlog/{bId}/{request}")]
-		public IActionResult UpdateStatusBlog(int bId, int request)
-		{
-			Blog blogUpdate = new Blog();
-
-			blogUpdate = context.Blogs.FirstOrDefault(x => x.Id == bId);
-			if (blogUpdate != null)
-			{
-				if(request == 1)
-				{
-					blogUpdate.Status = true;
-				} else
-				{
-					blogUpdate.Status = null;
-				}
-			}
-			context.Blogs.Update(blogUpdate);
-			context.SaveChanges();
-			return Ok("Update OK");
-		}
+            var response = new
+            {
+                blog = blog,
+                commentList = commentList,
+                totalComment = totalComment
+            };
+            if (blog != null)
+            {
+                return Ok(response);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
 
 
-		//them blog
-		[HttpPost("AddBlog")]
-		public IActionResult CreateBlog([FromBody] Blog blog)
-		{
-			context.Blogs.Add(blog);
-			context.SaveChanges();
-			return Ok("Add Ok");
-		}
+        //duyet blog xem co duoc up khong
+        [HttpPut("UpdateStatusBlog/{bId}/{request}")]
+        public IActionResult UpdateStatusBlog(int bId, int request)
+        {
+            Blog blogUpdate = new Blog();
 
-		//update blog
+            blogUpdate = context.Blogs.FirstOrDefault(x => x.Id == bId);
+            if (blogUpdate != null)
+            {
+                if (request == 1)
+                {
+                    blogUpdate.Status = true;
+                }
+                else
+                {
+                    blogUpdate.Status = null;
+                }
+            }
+            context.Blogs.Update(blogUpdate);
+            context.SaveChanges();
+            return Ok("Update OK");
+        }
+
+
+        //them blog
+        [HttpPost("AddBlog")]
+        public IActionResult CreateBlog([FromBody] Blog blog)
+        {
+            context.Blogs.Add(blog);
+            context.SaveChanges();
+            return Ok("Add Ok");
+        }
+
+        //update blog
         [HttpPut("UpdateBlog")]
         public IActionResult UpdateBlog([FromBody] Blog blog)
         {
@@ -188,38 +184,45 @@ namespace CallAPI.Controllers
 
         //xoa blog
         [HttpDelete("DeleteBlog")]
-		public IActionResult DeleteBlog(int blogId)
-		{
-			Blog blog = new Blog();
-			var commentBlog = context.CommentBlogs.Where(x => x.BlogId == blogId).ToList();
+        public IActionResult DeleteBlog(int blogId)
+        {
+            Blog blog = new Blog();
+            var commentBlog = context.CommentBlogs.Where(x => x.BlogId == blogId).ToList();
 
-			context.CommentBlogs.RemoveRange(commentBlog);
+            var rating = context.Ratings.Where(x => x.BlogId == blogId).ToList();
 
-			blog = context.Blogs.FirstOrDefault(x => x.Id == blogId);
-			context.Blogs.Remove(blog);
-			context.SaveChanges();
-			return Ok("Delete OK");
-		}
+            // xoa rating
+            context.Ratings.RemoveRange(rating);
 
-		//xem list blog can duoc duyet
-		[HttpGet("GetListBlogRequest")]
-		public IActionResult GetListBlogRequest()
-		{
-			var blogs = context.Blogs.Include(x => x.Creator).Where(x=> x.Status == false).
-				OrderByDescending(x => x.Id).Select(x => new
-				{
-					id = x.Id,
-					Title = x.Title,
-					Image = x.Image,
-					CreatedDate = x.CreatedDate,
-					Content = x.Content,
-					Creator = new Account
-					{
-						FullName = x.Creator.FullName,
-					}
-				}).ToList();
+            //xoa comment
+            context.CommentBlogs.RemoveRange(commentBlog);
 
-			return Ok(blogs);
-		}
-	}
+            blog = context.Blogs.FirstOrDefault(x => x.Id == blogId);
+
+            context.Blogs.Remove(blog);
+            context.SaveChanges();
+            return Ok("Delete OK");
+        }
+
+        //xem list blog can duoc duyet
+        [HttpGet("GetListBlogRequest")]
+        public IActionResult GetListBlogRequest()
+        {
+            var blogs = context.Blogs.Include(x => x.Creator).Where(x => x.Status == false).
+                OrderByDescending(x => x.Id).Select(x => new
+                {
+                    id = x.Id,
+                    Title = x.Title,
+                    Image = x.Image,
+                    CreatedDate = x.CreatedDate,
+                    Content = x.Content,
+                    Creator = new Account
+                    {
+                        FullName = x.Creator.FullName,
+                    }
+                }).ToList();
+
+            return Ok(blogs);
+        }
+    }
 }

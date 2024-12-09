@@ -21,6 +21,7 @@ namespace WebClient.Controllers
 
 		}
 		[HttpPost]
+		//tao 1 comment moi
 		public async Task<IActionResult> CommentBlog(int blogId, int? parentId, string content)
 		{
 			if (GetUserLogin()==null)
@@ -28,7 +29,7 @@ namespace WebClient.Controllers
 				return RedirectToAction("Login", "Account");
 			}
 			CommentBlog comment = new CommentBlog();
-			if (parentId == 0) // la comment goc
+			if (parentId == 0) // la comment gốc
 			{
 				comment.ParentId = 0;
 				comment.CreatedDate = DateTime.Now;

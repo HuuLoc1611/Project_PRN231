@@ -27,6 +27,8 @@ public partial class ProjectPrn231Context : DbContext
 
     public virtual DbSet<TagBlog> TagBlogs { get; set; }
 
+    public virtual DbSet<Transaction> Transactions { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
@@ -119,6 +121,19 @@ public partial class ProjectPrn231Context : DbContext
             entity.HasOne(d => d.Tag).WithMany(p => p.TagBlogs)
                 .HasForeignKey(d => d.TagId)
                 .HasConstraintName("FK_TagBlog_Tag");
+        });
+
+        modelBuilder.Entity<Transaction>(entity =>
+        {
+            entity.ToTable("Transaction");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.AccountId).HasColumnName("Account_Id");
+            entity.Property(e => e.Date).HasColumnType("date");
+
+            entity.HasOne(d => d.Account).WithMany(p => p.Transactions)
+                .HasForeignKey(d => d.AccountId)
+                .HasConstraintName("FK_Transaction_Account");
         });
 
         OnModelCreatingPartial(modelBuilder);

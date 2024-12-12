@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [ProjectPRN231]    Script Date: 11/26/2024 10:10:04 PM ******/
+/****** Object:  Database [ProjectPRN231]    Script Date: 12/12/2024 10:16:40 PM ******/
 CREATE DATABASE [ProjectPRN231]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -82,7 +82,7 @@ ALTER DATABASE [ProjectPRN231] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLE
 GO
 USE [ProjectPRN231]
 GO
-/****** Object:  Table [dbo].[Account]    Script Date: 11/26/2024 10:10:04 PM ******/
+/****** Object:  Table [dbo].[Account]    Script Date: 12/12/2024 10:16:41 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -94,14 +94,15 @@ CREATE TABLE [dbo].[Account](
 	[Role] [int] NULL,
 	[Email] [nvarchar](max) NULL,
 	[Full_Name] [nvarchar](max) NULL,
-	[Phone] [nvarchar](max) NULL,
+	[Is_Member] [bit] NULL,
+	[Image] [nvarchar](max) NULL,
  CONSTRAINT [PK_Account] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Blog]    Script Date: 11/26/2024 10:10:04 PM ******/
+/****** Object:  Table [dbo].[Blog]    Script Date: 12/12/2024 10:16:41 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -121,7 +122,7 @@ CREATE TABLE [dbo].[Blog](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CommentBlog]    Script Date: 11/26/2024 10:10:04 PM ******/
+/****** Object:  Table [dbo].[CommentBlog]    Script Date: 12/12/2024 10:16:41 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -139,7 +140,24 @@ CREATE TABLE [dbo].[CommentBlog](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Tag]    Script Date: 11/26/2024 10:10:04 PM ******/
+/****** Object:  Table [dbo].[Rating]    Script Date: 12/12/2024 10:16:41 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Rating](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[account_id] [int] NULL,
+	[blog_id] [int] NULL,
+	[created_date] [date] NULL,
+	[quality] [float] NULL,
+ CONSTRAINT [PK_Rating] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Tag]    Script Date: 12/12/2024 10:16:41 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -153,7 +171,7 @@ CREATE TABLE [dbo].[Tag](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TagBlog]    Script Date: 11/26/2024 10:10:04 PM ******/
+/****** Object:  Table [dbo].[TagBlog]    Script Date: 12/12/2024 10:16:41 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -168,11 +186,39 @@ CREATE TABLE [dbo].[TagBlog](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+/****** Object:  Table [dbo].[Transaction]    Script Date: 12/12/2024 10:16:41 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Transaction](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Account_Id] [int] NULL,
+	[Date] [date] NULL,
+	[Price] [float] NULL,
+ CONSTRAINT [PK_Transaction] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
 SET IDENTITY_INSERT [dbo].[Account] ON 
 GO
-INSERT [dbo].[Account] ([Id], [Username], [Password], [Role], [Email], [Full_Name], [Phone]) VALUES (1, N'john_doe', N'password123', 1, N'john.doe@example.com', N'John Doe', N'123-456-7890')
+INSERT [dbo].[Account] ([Id], [Username], [Password], [Role], [Email], [Full_Name], [Is_Member], [Image]) VALUES (1, N'john_doe', N'password123', 1, N'john.doe@example.com', N'John Doe', 1, N'')
 GO
-INSERT [dbo].[Account] ([Id], [Username], [Password], [Role], [Email], [Full_Name], [Phone]) VALUES (2, N'jane_smith', N'password456', 2, N'jane.smith@example.com', N'Jane Smith', N'987-654-3210')
+INSERT [dbo].[Account] ([Id], [Username], [Password], [Role], [Email], [Full_Name], [Is_Member], [Image]) VALUES (2, N'jane_smith', N'password456', 2, N'jane.smith@example.com', N'Jane Smith', 1, N'')
+GO
+INSERT [dbo].[Account] ([Id], [Username], [Password], [Role], [Email], [Full_Name], [Is_Member], [Image]) VALUES (3, N'123', N'123', 1, N'123@gmail.com', N'NgoHuuLoc', 1, N'/uploads/ce9c9f4e-35a1-4246-b7eb-6a11db01f9ad.png')
+GO
+INSERT [dbo].[Account] ([Id], [Username], [Password], [Role], [Email], [Full_Name], [Is_Member], [Image]) VALUES (4, N'1234', N'123', 1, N'ngohuuloc54@gmail.com', NULL, 0, NULL)
+GO
+INSERT [dbo].[Account] ([Id], [Username], [Password], [Role], [Email], [Full_Name], [Is_Member], [Image]) VALUES (5, N'huuloc', N'123', 1, N'ngohuuloc542@gmail.com', NULL, 0, NULL)
+GO
+INSERT [dbo].[Account] ([Id], [Username], [Password], [Role], [Email], [Full_Name], [Is_Member], [Image]) VALUES (6, N'123456', N'123', 1, N'ngohuuloc123@gmail.com', NULL, 0, NULL)
+GO
+INSERT [dbo].[Account] ([Id], [Username], [Password], [Role], [Email], [Full_Name], [Is_Member], [Image]) VALUES (7, N'1', N'123', 1, N'123456@gmail.com', NULL, 0, NULL)
+GO
+INSERT [dbo].[Account] ([Id], [Username], [Password], [Role], [Email], [Full_Name], [Is_Member], [Image]) VALUES (8, N'abc', N'123', 1, N'abc@gmail.com', NULL, 0, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[Account] OFF
 GO
@@ -197,6 +243,12 @@ GO
 INSERT [dbo].[Blog] ([Id], [Title], [Image], [Created_Date], [Creator_Id], [Status], [isComment], [Content]) VALUES (18, N'Blog 5', N'/uploads/94c13b4e-1c4f-40f5-8ffe-bf1fa27d726a.png', CAST(N'2024-11-01' AS Date), 1, NULL, 1, N'Facebook có đăng nhập được không ?')
 GO
 INSERT [dbo].[Blog] ([Id], [Title], [Image], [Created_Date], [Creator_Id], [Status], [isComment], [Content]) VALUES (19, N'Blog thứ 10', NULL, CAST(N'2024-11-01' AS Date), 1, 1, 1, N'Blog thứ 10')
+GO
+INSERT [dbo].[Blog] ([Id], [Title], [Image], [Created_Date], [Creator_Id], [Status], [isComment], [Content]) VALUES (20, N'Blog cua loc', N'/uploads/97b02985-4c15-4fbe-9093-5d52dc4bd8d9.png', CAST(N'2024-12-08' AS Date), 3, 1, 1, N'ABCXYZ')
+GO
+INSERT [dbo].[Blog] ([Id], [Title], [Image], [Created_Date], [Creator_Id], [Status], [isComment], [Content]) VALUES (21, N'Blog cua loc huu ngo', N'/uploads/5dbac03d-20a2-4c33-ab88-a44b49bcfd3e.png', CAST(N'2024-12-08' AS Date), 3, 0, 1, N'ABCXYZ')
+GO
+INSERT [dbo].[Blog] ([Id], [Title], [Image], [Created_Date], [Creator_Id], [Status], [isComment], [Content]) VALUES (22, N'123', N'/uploads/2b6a90e3-417f-4961-9a49-d43d2af1a1c5.png', CAST(N'2024-12-09' AS Date), 3, 1, 1, N'123')
 GO
 SET IDENTITY_INSERT [dbo].[Blog] OFF
 GO
@@ -237,7 +289,35 @@ INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created
 GO
 INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (50, 19, 0, 1, CAST(N'2024-11-26' AS Date), N'abvc')
 GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (51, 19, 0, 3, CAST(N'2024-12-07' AS Date), N'hay')
+GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (52, 20, 0, 3, CAST(N'2024-12-09' AS Date), N'dasd')
+GO
+INSERT [dbo].[CommentBlog] ([Id], [Blog_id], [Parent_id], [Account_id], [Created_Date], [Content]) VALUES (53, 20, 52, 3, CAST(N'2024-12-09' AS Date), N'asd')
+GO
 SET IDENTITY_INSERT [dbo].[CommentBlog] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Rating] ON 
+GO
+INSERT [dbo].[Rating] ([id], [account_id], [blog_id], [created_date], [quality]) VALUES (1, 1, 19, CAST(N'2024-12-04' AS Date), 5)
+GO
+INSERT [dbo].[Rating] ([id], [account_id], [blog_id], [created_date], [quality]) VALUES (2, 2, 19, NULL, 5)
+GO
+INSERT [dbo].[Rating] ([id], [account_id], [blog_id], [created_date], [quality]) VALUES (3, 3, 19, NULL, 3)
+GO
+INSERT [dbo].[Rating] ([id], [account_id], [blog_id], [created_date], [quality]) VALUES (4, 4, 19, NULL, 4)
+GO
+INSERT [dbo].[Rating] ([id], [account_id], [blog_id], [created_date], [quality]) VALUES (5, 4, 19, NULL, 5)
+GO
+INSERT [dbo].[Rating] ([id], [account_id], [blog_id], [created_date], [quality]) VALUES (6, 4, 19, NULL, 3)
+GO
+INSERT [dbo].[Rating] ([id], [account_id], [blog_id], [created_date], [quality]) VALUES (7, 2, 20, NULL, 4)
+GO
+INSERT [dbo].[Rating] ([id], [account_id], [blog_id], [created_date], [quality]) VALUES (9, 3, 20, NULL, 5)
+GO
+INSERT [dbo].[Rating] ([id], [account_id], [blog_id], [created_date], [quality]) VALUES (10, 3, 20, NULL, 5)
+GO
+SET IDENTITY_INSERT [dbo].[Rating] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Tag] ON 
 GO
@@ -255,6 +335,22 @@ INSERT [dbo].[TagBlog] ([Tag_Id], [Blog_Id], [id]) VALUES (2, 2, 2)
 GO
 SET IDENTITY_INSERT [dbo].[TagBlog] OFF
 GO
+SET IDENTITY_INSERT [dbo].[Transaction] ON 
+GO
+INSERT [dbo].[Transaction] ([Id], [Account_Id], [Date], [Price]) VALUES (1, 4, CAST(N'2024-12-08' AS Date), 10000)
+GO
+INSERT [dbo].[Transaction] ([Id], [Account_Id], [Date], [Price]) VALUES (2, 3, CAST(N'2024-12-08' AS Date), 10000)
+GO
+INSERT [dbo].[Transaction] ([Id], [Account_Id], [Date], [Price]) VALUES (3, 3, CAST(N'2024-12-08' AS Date), 10000)
+GO
+INSERT [dbo].[Transaction] ([Id], [Account_Id], [Date], [Price]) VALUES (4, 3, CAST(N'2024-12-08' AS Date), 10000)
+GO
+INSERT [dbo].[Transaction] ([Id], [Account_Id], [Date], [Price]) VALUES (5, 3, CAST(N'2024-12-08' AS Date), 10000)
+GO
+INSERT [dbo].[Transaction] ([Id], [Account_Id], [Date], [Price]) VALUES (6, 3, CAST(N'2024-12-08' AS Date), 10000)
+GO
+SET IDENTITY_INSERT [dbo].[Transaction] OFF
+GO
 ALTER TABLE [dbo].[Blog]  WITH CHECK ADD  CONSTRAINT [FK_Blog_Account] FOREIGN KEY([Creator_Id])
 REFERENCES [dbo].[Account] ([Id])
 GO
@@ -270,6 +366,16 @@ REFERENCES [dbo].[Blog] ([Id])
 GO
 ALTER TABLE [dbo].[CommentBlog] CHECK CONSTRAINT [FK_CommentBlog_Blog]
 GO
+ALTER TABLE [dbo].[Rating]  WITH CHECK ADD  CONSTRAINT [FK_Rating_Account] FOREIGN KEY([account_id])
+REFERENCES [dbo].[Account] ([Id])
+GO
+ALTER TABLE [dbo].[Rating] CHECK CONSTRAINT [FK_Rating_Account]
+GO
+ALTER TABLE [dbo].[Rating]  WITH CHECK ADD  CONSTRAINT [FK_Rating_Blog] FOREIGN KEY([blog_id])
+REFERENCES [dbo].[Blog] ([Id])
+GO
+ALTER TABLE [dbo].[Rating] CHECK CONSTRAINT [FK_Rating_Blog]
+GO
 ALTER TABLE [dbo].[TagBlog]  WITH CHECK ADD  CONSTRAINT [FK_TagBlog_Blog] FOREIGN KEY([Blog_Id])
 REFERENCES [dbo].[Blog] ([Id])
 GO
@@ -279,6 +385,11 @@ ALTER TABLE [dbo].[TagBlog]  WITH CHECK ADD  CONSTRAINT [FK_TagBlog_Tag] FOREIGN
 REFERENCES [dbo].[Tag] ([Id])
 GO
 ALTER TABLE [dbo].[TagBlog] CHECK CONSTRAINT [FK_TagBlog_Tag]
+GO
+ALTER TABLE [dbo].[Transaction]  WITH CHECK ADD  CONSTRAINT [FK_Transaction_Account] FOREIGN KEY([Account_Id])
+REFERENCES [dbo].[Account] ([Id])
+GO
+ALTER TABLE [dbo].[Transaction] CHECK CONSTRAINT [FK_Transaction_Account]
 GO
 USE [master]
 GO
